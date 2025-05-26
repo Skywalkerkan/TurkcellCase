@@ -17,6 +17,9 @@
 		DEE1BB5D2DE4D960004DF131 /* TurkcellCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB5C2DE4D960004DF131 /* TurkcellCaseTests.swift */; };
 		DEE1BB672DE4D960004DF131 /* TurkcellCaseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB662DE4D960004DF131 /* TurkcellCaseUITests.swift */; };
 		DEE1BB692DE4D960004DF131 /* TurkcellCaseUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB682DE4D960004DF131 /* TurkcellCaseUITestsLaunchTests.swift */; };
+		DEE1BB7E2DE4DC01004DF131 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB7D2DE4DC01004DF131 /* BaseViewController.swift */; };
+		DEE1BB812DE4DC5C004DF131 /* LoadingShowable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB802DE4DC5C004DF131 /* LoadingShowable.swift */; };
+		DEE1BB842DE4DC7F004DF131 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB832DE4DC7F004DF131 /* LoadingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +54,9 @@
 		DEE1BB622DE4D960004DF131 /* TurkcellCaseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TurkcellCaseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE1BB662DE4D960004DF131 /* TurkcellCaseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurkcellCaseUITests.swift; sourceTree = "<group>"; };
 		DEE1BB682DE4D960004DF131 /* TurkcellCaseUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TurkcellCaseUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		DEE1BB7D2DE4DC01004DF131 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		DEE1BB802DE4DC5C004DF131 /* LoadingShowable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingShowable.swift; sourceTree = "<group>"; };
+		DEE1BB832DE4DC7F004DF131 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +107,12 @@
 		DEE1BB412DE4D95F004DF131 /* TurkcellCase */ = {
 			isa = PBXGroup;
 			children = (
+				DEE1BB7A2DE4DA06004DF131 /* App */,
+				DEE1BB792DE4D9FC004DF131 /* Resources */,
+				DEE1BB782DE4D9E4004DF131 /* Module */,
+				DEE1BB772DE4D9DF004DF131 /* Entities */,
+				DEE1BB762DE4D9DA004DF131 /* Network */,
+				DEE1BB752DE4D9D4004DF131 /* Extensions */,
 				DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */,
 				DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */,
 				DEE1BB462DE4D95F004DF131 /* ViewController.swift */,
@@ -128,6 +140,83 @@
 				DEE1BB682DE4D960004DF131 /* TurkcellCaseUITestsLaunchTests.swift */,
 			);
 			path = TurkcellCaseUITests;
+			sourceTree = "<group>";
+		};
+		DEE1BB752DE4D9D4004DF131 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DEE1BB762DE4D9DA004DF131 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		DEE1BB772DE4D9DF004DF131 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		DEE1BB782DE4D9E4004DF131 /* Module */ = {
+			isa = PBXGroup;
+			children = (
+				DEE1BB7C2DE4DB9D004DF131 /* MovieListScreen */,
+				DEE1BB7B2DE4DB98004DF131 /* Base */,
+			);
+			path = Module;
+			sourceTree = "<group>";
+		};
+		DEE1BB792DE4D9FC004DF131 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DEE1BB822DE4DC73004DF131 /* View */,
+				DEE1BB7F2DE4DC50004DF131 /* Utils */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DEE1BB7A2DE4DA06004DF131 /* App */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		DEE1BB7B2DE4DB98004DF131 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				DEE1BB7D2DE4DC01004DF131 /* BaseViewController.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		DEE1BB7C2DE4DB9D004DF131 /* MovieListScreen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = MovieListScreen;
+			sourceTree = "<group>";
+		};
+		DEE1BB7F2DE4DC50004DF131 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DEE1BB802DE4DC5C004DF131 /* LoadingShowable.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		DEE1BB822DE4DC73004DF131 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DEE1BB832DE4DC7F004DF131 /* LoadingView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,9 +350,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEE1BB7E2DE4DC01004DF131 /* BaseViewController.swift in Sources */,
 				DEE1BB472DE4D95F004DF131 /* ViewController.swift in Sources */,
 				DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */,
+				DEE1BB812DE4DC5C004DF131 /* LoadingShowable.swift in Sources */,
 				DEE1BB452DE4D95F004DF131 /* SceneDelegate.swift in Sources */,
+				DEE1BB842DE4DC7F004DF131 /* LoadingView.swift in Sources */,
 				DEE1BB4D2DE4D95F004DF131 /* TurkcellCase.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
