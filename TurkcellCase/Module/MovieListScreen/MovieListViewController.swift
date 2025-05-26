@@ -7,11 +7,13 @@
 
 import UIKit
 
-class ViewController: BaseViewController {
+class MovieListViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        view.backgroundColor = .white
+        print("viewdidload")
+        
     }
 
 

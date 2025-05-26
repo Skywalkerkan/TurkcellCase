@@ -9,8 +9,7 @@
 /* Begin PBXBuildFile section */
 		DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */; };
 		DEE1BB452DE4D95F004DF131 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */; };
-		DEE1BB472DE4D95F004DF131 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB462DE4D95F004DF131 /* ViewController.swift */; };
-		DEE1BB4A2DE4D95F004DF131 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DEE1BB492DE4D95F004DF131 /* Base */; };
+		DEE1BB472DE4D95F004DF131 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB462DE4D95F004DF131 /* MovieListViewController.swift */; };
 		DEE1BB4D2DE4D95F004DF131 /* TurkcellCase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB4B2DE4D95F004DF131 /* TurkcellCase.xcdatamodeld */; };
 		DEE1BB4F2DE4D960004DF131 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DEE1BB4E2DE4D960004DF131 /* Assets.xcassets */; };
 		DEE1BB522DE4D960004DF131 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = DEE1BB512DE4D960004DF131 /* Base */; };
@@ -20,6 +19,10 @@
 		DEE1BB7E2DE4DC01004DF131 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB7D2DE4DC01004DF131 /* BaseViewController.swift */; };
 		DEE1BB812DE4DC5C004DF131 /* LoadingShowable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB802DE4DC5C004DF131 /* LoadingShowable.swift */; };
 		DEE1BB842DE4DC7F004DF131 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB832DE4DC7F004DF131 /* LoadingView.swift */; };
+		DEE1BB862DE4F6D3004DF131 /* MovieListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB852DE4F6D3004DF131 /* MovieListPresenter.swift */; };
+		DEE1BB882DE4F6E2004DF131 /* MovieListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB872DE4F6E2004DF131 /* MovieListInteractor.swift */; };
+		DEE1BB8A2DE4F6EB004DF131 /* MovieListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB892DE4F6EB004DF131 /* MovieListRouter.swift */; };
+		DEE1BB8C2DE4F6FA004DF131 /* MovieListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB8B2DE4F6FA004DF131 /* MovieListEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,8 +46,7 @@
 		DEE1BB3F2DE4D95F004DF131 /* TurkcellCase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurkcellCase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DEE1BB462DE4D95F004DF131 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		DEE1BB492DE4D95F004DF131 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DEE1BB462DE4D95F004DF131 /* MovieListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
 		DEE1BB4C2DE4D95F004DF131 /* TurkcellCase.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TurkcellCase.xcdatamodel; sourceTree = "<group>"; };
 		DEE1BB4E2DE4D960004DF131 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DEE1BB512DE4D960004DF131 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -57,6 +59,10 @@
 		DEE1BB7D2DE4DC01004DF131 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		DEE1BB802DE4DC5C004DF131 /* LoadingShowable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingShowable.swift; sourceTree = "<group>"; };
 		DEE1BB832DE4DC7F004DF131 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		DEE1BB852DE4F6D3004DF131 /* MovieListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListPresenter.swift; sourceTree = "<group>"; };
+		DEE1BB872DE4F6E2004DF131 /* MovieListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListInteractor.swift; sourceTree = "<group>"; };
+		DEE1BB892DE4F6EB004DF131 /* MovieListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListRouter.swift; sourceTree = "<group>"; };
+		DEE1BB8B2DE4F6FA004DF131 /* MovieListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,8 +121,6 @@
 				DEE1BB752DE4D9D4004DF131 /* Extensions */,
 				DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */,
 				DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */,
-				DEE1BB462DE4D95F004DF131 /* ViewController.swift */,
-				DEE1BB482DE4D95F004DF131 /* Main.storyboard */,
 				DEE1BB4E2DE4D960004DF131 /* Assets.xcassets */,
 				DEE1BB502DE4D960004DF131 /* LaunchScreen.storyboard */,
 				DEE1BB532DE4D960004DF131 /* Info.plist */,
@@ -199,6 +203,11 @@
 		DEE1BB7C2DE4DB9D004DF131 /* MovieListScreen */ = {
 			isa = PBXGroup;
 			children = (
+				DEE1BB462DE4D95F004DF131 /* MovieListViewController.swift */,
+				DEE1BB852DE4F6D3004DF131 /* MovieListPresenter.swift */,
+				DEE1BB872DE4F6E2004DF131 /* MovieListInteractor.swift */,
+				DEE1BB892DE4F6EB004DF131 /* MovieListRouter.swift */,
+				DEE1BB8B2DE4F6FA004DF131 /* MovieListEntity.swift */,
 			);
 			path = MovieListScreen;
 			sourceTree = "<group>";
@@ -325,7 +334,6 @@
 			files = (
 				DEE1BB4F2DE4D960004DF131 /* Assets.xcassets in Resources */,
 				DEE1BB522DE4D960004DF131 /* Base in Resources */,
-				DEE1BB4A2DE4D95F004DF131 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,12 +359,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEE1BB7E2DE4DC01004DF131 /* BaseViewController.swift in Sources */,
-				DEE1BB472DE4D95F004DF131 /* ViewController.swift in Sources */,
+				DEE1BB882DE4F6E2004DF131 /* MovieListInteractor.swift in Sources */,
+				DEE1BB472DE4D95F004DF131 /* MovieListViewController.swift in Sources */,
+				DEE1BB8A2DE4F6EB004DF131 /* MovieListRouter.swift in Sources */,
 				DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */,
 				DEE1BB812DE4DC5C004DF131 /* LoadingShowable.swift in Sources */,
 				DEE1BB452DE4D95F004DF131 /* SceneDelegate.swift in Sources */,
 				DEE1BB842DE4DC7F004DF131 /* LoadingView.swift in Sources */,
+				DEE1BB8C2DE4F6FA004DF131 /* MovieListEntity.swift in Sources */,
 				DEE1BB4D2DE4D95F004DF131 /* TurkcellCase.xcdatamodeld in Sources */,
+				DEE1BB862DE4F6D3004DF131 /* MovieListPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,14 +405,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		DEE1BB482DE4D95F004DF131 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DEE1BB492DE4D95F004DF131 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		DEE1BB502DE4D960004DF131 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -543,7 +547,6 @@
 				INFOPLIST_FILE = TurkcellCase/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -572,7 +575,6 @@
 				INFOPLIST_FILE = TurkcellCase/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
