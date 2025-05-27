@@ -10,6 +10,7 @@
 		DE8BE3052DE6294C006E73A3 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = DE8BE3042DE6294C006E73A3 /* Swinject */; };
 		DE8BE3082DE63CEE006E73A3 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8BE3072DE63CEE006E73A3 /* MovieCell.swift */; };
 		DE8BE30B2DE640F2006E73A3 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */; };
+		DE8BE30E2DE6591B006E73A3 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = DE8BE30D2DE6591B006E73A3 /* SDWebImage */; };
 		DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */; };
 		DEE1BB452DE4D95F004DF131 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */; };
 		DEE1BB472DE4D95F004DF131 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB462DE4D95F004DF131 /* MovieListViewController.swift */; };
@@ -30,7 +31,6 @@
 		DEE1BB902DE4FD95004DF131 /* TMDBEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB8F2DE4FD95004DF131 /* TMDBEndpoint.swift */; };
 		DEE1BB942DE4FDAD004DF131 /* TMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB932DE4FDAD004DF131 /* TMDBService.swift */; };
 		DEE1BB962DE4FDBA004DF131 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB952DE4FDBA004DF131 /* APIKey.swift */; };
-		DEE1BB982DE500A4004DF131 /* MovieListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB972DE500A4004DF131 /* MovieListResponse.swift */; };
 		DEE1BB9A2DE5045E004DF131 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB992DE5045E004DF131 /* NetworkReachability.swift */; };
 		DEE1BB9C2DE50A4A004DF131 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB9B2DE50A4A004DF131 /* NetworkService.swift */; };
 /* End PBXBuildFile section */
@@ -79,7 +79,6 @@
 		DEE1BB8F2DE4FD95004DF131 /* TMDBEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBEndpoint.swift; sourceTree = "<group>"; };
 		DEE1BB932DE4FDAD004DF131 /* TMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBService.swift; sourceTree = "<group>"; };
 		DEE1BB952DE4FDBA004DF131 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
-		DEE1BB972DE500A4004DF131 /* MovieListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListResponse.swift; sourceTree = "<group>"; };
 		DEE1BB992DE5045E004DF131 /* NetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
 		DEE1BB9B2DE50A4A004DF131 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE8BE30E2DE6591B006E73A3 /* SDWebImage in Frameworks */,
 				DE8BE3052DE6294C006E73A3 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -205,7 +205,6 @@
 		DEE1BB772DE4D9DF004DF131 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				DEE1BB972DE500A4004DF131 /* MovieListResponse.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -291,6 +290,7 @@
 			name = TurkcellCase;
 			packageProductDependencies = (
 				DE8BE3042DE6294C006E73A3 /* Swinject */,
+				DE8BE30D2DE6591B006E73A3 /* SDWebImage */,
 			);
 			productName = TurkcellCase;
 			productReference = DEE1BB3F2DE4D95F004DF131 /* TurkcellCase.app */;
@@ -366,6 +366,7 @@
 			mainGroup = DEE1BB362DE4D95F004DF131;
 			packageReferences = (
 				DE8BE3032DE6294C006E73A3 /* XCRemoteSwiftPackageReference "Swinject" */,
+				DE8BE30C2DE6591B006E73A3 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = DEE1BB402DE4D95F004DF131 /* Products */;
 			projectDirPath = "";
@@ -425,7 +426,6 @@
 				DEE1BB8E2DE4FC15004DF131 /* NetworkError.swift in Sources */,
 				DEE1BB4D2DE4D95F004DF131 /* TurkcellCase.xcdatamodeld in Sources */,
 				DE8BE3082DE63CEE006E73A3 /* MovieCell.swift in Sources */,
-				DEE1BB982DE500A4004DF131 /* MovieListResponse.swift in Sources */,
 				DEE1BB9A2DE5045E004DF131 /* NetworkReachability.swift in Sources */,
 				DEE1BB862DE4F6D3004DF131 /* MovieListPresenter.swift in Sources */,
 				DEE1BB902DE4FD95004DF131 /* TMDBEndpoint.swift in Sources */,
@@ -777,6 +777,14 @@
 				minimumVersion = 2.9.1;
 			};
 		};
+		DE8BE30C2DE6591B006E73A3 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.21.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -784,6 +792,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DE8BE3032DE6294C006E73A3 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
+		};
+		DE8BE30D2DE6591B006E73A3 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE8BE30C2DE6591B006E73A3 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 

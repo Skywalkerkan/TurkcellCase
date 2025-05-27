@@ -63,9 +63,18 @@ final class MovieListViewController: BaseViewController {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
+    
+    var presenter: MovieListPresenterProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupViews()
+
+        presenter.viewDidLoad()
+
+    }
+    
+    private func setupViews() {
         view.backgroundColor = .white
         
         view.addSubview(collectionView)
@@ -76,20 +85,10 @@ final class MovieListViewController: BaseViewController {
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "MovieCell")
-        collectionView.register(
-            SectionHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: SectionHeaderView.identifier
-        )
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         
-        Task {
-            await fetchMovies()
-        }
     }
     
     private func fetchMovies() async {
@@ -111,22 +110,29 @@ final class MovieListViewController: BaseViewController {
 extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDataSource {
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return presenter.sectionCount
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return presenter.getMovieCount(for: section)
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) as? MovieCell else {
             return UICollectionViewCell()
         }
+        let movies = presenter.getMoviesForSection(indexPath.section)
+        let movie = movies[indexPath.item]
+        cell.configure(with: movie)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Film section\(indexPath.section), itemi \(indexPath.item)")
+        let movies = presenter.getMoviesForSection(indexPath.section)
+        let movie = movies[indexPath.item]
+        print(movie.backdropPath)
+        presenter.didSelectMovie(movie)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -142,28 +148,30 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
             return UICollectionReusableView()
         }
         
-        let title: String
-        switch indexPath.section {
-            case 0: title = "Top Rated"
-            case 1: title = "Upcoming"
-            case 2: title = "Now Playing"
-        default: title = ""
-        }
-        
+        let title = presenter.getSectionTitle(for: indexPath.section)
         header.configure(with: title)
         return header
     }
-
 }
 
 
 extension MovieListViewController: MovieListViewControllerProtocol {
     func setupCollectionView() {
-        
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "MovieCell")
+        collectionView.register(
+            SectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeaderView.identifier
+        )
     }
     
     func reloadData() {
-        
+        print(presenter.getMovieCount(for: 0))
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     func hideLoadingView() {

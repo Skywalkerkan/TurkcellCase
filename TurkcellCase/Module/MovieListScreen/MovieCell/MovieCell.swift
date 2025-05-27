@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class MovieCell: UICollectionViewCell {
     static let identifier = "MovieCell"
@@ -13,9 +14,9 @@ final class MovieCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = .red
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.cornerRadius = 8
         return imageView
     }()
     
@@ -32,7 +33,13 @@ final class MovieCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) { fatalError("fatal error") }
     
-    func configure(with imageUrl: String?) {
-        imageView.image = UIImage(named: "placeholder")
+    func configure(with movie: Movie) {
+        let baseURL = "https://image.tmdb.org/t/p/w500"
+        if let posterPath = movie.posterPath {
+            let fullURL = URL(string: baseURL + posterPath)
+            imageView.sd_setImage(with: fullURL, placeholderImage: UIImage(systemName: "film"), options: [.continueInBackground, .highPriority])
+        } else {
+            imageView.image = UIImage(systemName: "film")
+        }
     }
 }

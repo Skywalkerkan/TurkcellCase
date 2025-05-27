@@ -19,7 +19,6 @@ final class APIClient: NetworkService {
     init(session: URLSession = .shared, decoder: JSONDecoder = JSONDecoder()) {
         self.session = session
         self.decoder = decoder
-        self.decoder.keyDecodingStrategy = .convertFromSnakeCase
         self.decoder.dateDecodingStrategy = .iso8601
     }
     
@@ -55,6 +54,7 @@ final class APIClient: NetworkService {
             let decoded = try decoder.decode(T.self, from: data)
             return .success(decoded)
         } catch let error as DecodingError {
+            print(error)
             return .failure(.decodingFailed(error))
         } catch {
             return .failure(.unknown(error))
