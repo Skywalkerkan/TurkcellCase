@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		DE8BE3052DE6294C006E73A3 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = DE8BE3042DE6294C006E73A3 /* Swinject */; };
+		DE8BE3082DE63CEE006E73A3 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8BE3072DE63CEE006E73A3 /* MovieCell.swift */; };
+		DE8BE30B2DE640F2006E73A3 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */; };
 		DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */; };
 		DEE1BB452DE4D95F004DF131 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */; };
 		DEE1BB472DE4D95F004DF131 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB462DE4D95F004DF131 /* MovieListViewController.swift */; };
@@ -51,6 +53,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DE8BE3072DE63CEE006E73A3 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		DEE1BB3F2DE4D95F004DF131 /* TurkcellCase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurkcellCase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +110,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DE8BE3062DE63CD5006E73A3 /* MovieCell */ = {
+			isa = PBXGroup;
+			children = (
+				DE8BE3072DE63CEE006E73A3 /* MovieCell.swift */,
+			);
+			path = MovieCell;
+			sourceTree = "<group>";
+		};
+		DE8BE3092DE640E0006E73A3 /* SectionHeader */ = {
+			isa = PBXGroup;
+			children = (
+				DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */,
+			);
+			path = SectionHeader;
+			sourceTree = "<group>";
+		};
 		DEE1BB362DE4D95F004DF131 = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +246,8 @@
 		DEE1BB7C2DE4DB9D004DF131 /* MovieListScreen */ = {
 			isa = PBXGroup;
 			children = (
+				DE8BE3092DE640E0006E73A3 /* SectionHeader */,
+				DE8BE3062DE63CD5006E73A3 /* MovieCell */,
 				DEE1BB462DE4D95F004DF131 /* MovieListViewController.swift */,
 				DEE1BB852DE4F6D3004DF131 /* MovieListPresenter.swift */,
 				DEE1BB872DE4F6E2004DF131 /* MovieListInteractor.swift */,
@@ -394,6 +416,7 @@
 				DEE1BB9C2DE50A4A004DF131 /* NetworkService.swift in Sources */,
 				DEE1BB8A2DE4F6EB004DF131 /* MovieListRouter.swift in Sources */,
 				DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */,
+				DE8BE30B2DE640F2006E73A3 /* SectionHeaderView.swift in Sources */,
 				DEE1BB812DE4DC5C004DF131 /* LoadingShowable.swift in Sources */,
 				DEE1BB452DE4D95F004DF131 /* SceneDelegate.swift in Sources */,
 				DEE1BB842DE4DC7F004DF131 /* LoadingView.swift in Sources */,
@@ -401,6 +424,7 @@
 				DEE1BB962DE4FDBA004DF131 /* APIKey.swift in Sources */,
 				DEE1BB8E2DE4FC15004DF131 /* NetworkError.swift in Sources */,
 				DEE1BB4D2DE4D95F004DF131 /* TurkcellCase.xcdatamodeld in Sources */,
+				DE8BE3082DE63CEE006E73A3 /* MovieCell.swift in Sources */,
 				DEE1BB982DE500A4004DF131 /* MovieListResponse.swift in Sources */,
 				DEE1BB9A2DE5045E004DF131 /* NetworkReachability.swift in Sources */,
 				DEE1BB862DE4F6D3004DF131 /* MovieListPresenter.swift in Sources */,
