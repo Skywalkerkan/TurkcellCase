@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE8BE3052DE6294C006E73A3 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = DE8BE3042DE6294C006E73A3 /* Swinject */; };
 		DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */; };
 		DEE1BB452DE4D95F004DF131 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */; };
 		DEE1BB472DE4D95F004DF131 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB462DE4D95F004DF131 /* MovieListViewController.swift */; };
@@ -23,6 +24,13 @@
 		DEE1BB882DE4F6E2004DF131 /* MovieListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB872DE4F6E2004DF131 /* MovieListInteractor.swift */; };
 		DEE1BB8A2DE4F6EB004DF131 /* MovieListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB892DE4F6EB004DF131 /* MovieListRouter.swift */; };
 		DEE1BB8C2DE4F6FA004DF131 /* MovieListEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB8B2DE4F6FA004DF131 /* MovieListEntity.swift */; };
+		DEE1BB8E2DE4FC15004DF131 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB8D2DE4FC15004DF131 /* NetworkError.swift */; };
+		DEE1BB902DE4FD95004DF131 /* TMDBEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB8F2DE4FD95004DF131 /* TMDBEndpoint.swift */; };
+		DEE1BB942DE4FDAD004DF131 /* TMDBService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB932DE4FDAD004DF131 /* TMDBService.swift */; };
+		DEE1BB962DE4FDBA004DF131 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB952DE4FDBA004DF131 /* APIKey.swift */; };
+		DEE1BB982DE500A4004DF131 /* MovieListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB972DE500A4004DF131 /* MovieListResponse.swift */; };
+		DEE1BB9A2DE5045E004DF131 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB992DE5045E004DF131 /* NetworkReachability.swift */; };
+		DEE1BB9C2DE50A4A004DF131 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB9B2DE50A4A004DF131 /* NetworkService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +71,13 @@
 		DEE1BB872DE4F6E2004DF131 /* MovieListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListInteractor.swift; sourceTree = "<group>"; };
 		DEE1BB892DE4F6EB004DF131 /* MovieListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListRouter.swift; sourceTree = "<group>"; };
 		DEE1BB8B2DE4F6FA004DF131 /* MovieListEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListEntity.swift; sourceTree = "<group>"; };
+		DEE1BB8D2DE4FC15004DF131 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		DEE1BB8F2DE4FD95004DF131 /* TMDBEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBEndpoint.swift; sourceTree = "<group>"; };
+		DEE1BB932DE4FDAD004DF131 /* TMDBService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBService.swift; sourceTree = "<group>"; };
+		DEE1BB952DE4FDBA004DF131 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		DEE1BB972DE500A4004DF131 /* MovieListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListResponse.swift; sourceTree = "<group>"; };
+		DEE1BB992DE5045E004DF131 /* NetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
+		DEE1BB9B2DE50A4A004DF131 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE8BE3052DE6294C006E73A3 /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +172,12 @@
 		DEE1BB762DE4D9DA004DF131 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				DEE1BB8D2DE4FC15004DF131 /* NetworkError.swift */,
+				DEE1BB8F2DE4FD95004DF131 /* TMDBEndpoint.swift */,
+				DEE1BB932DE4FDAD004DF131 /* TMDBService.swift */,
+				DEE1BB952DE4FDBA004DF131 /* APIKey.swift */,
+				DEE1BB992DE5045E004DF131 /* NetworkReachability.swift */,
+				DEE1BB9B2DE50A4A004DF131 /* NetworkService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -163,6 +185,7 @@
 		DEE1BB772DE4D9DF004DF131 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				DEE1BB972DE500A4004DF131 /* MovieListResponse.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -244,6 +267,9 @@
 			dependencies = (
 			);
 			name = TurkcellCase;
+			packageProductDependencies = (
+				DE8BE3042DE6294C006E73A3 /* Swinject */,
+			);
 			productName = TurkcellCase;
 			productReference = DEE1BB3F2DE4D95F004DF131 /* TurkcellCase.app */;
 			productType = "com.apple.product-type.application";
@@ -316,6 +342,9 @@
 				Base,
 			);
 			mainGroup = DEE1BB362DE4D95F004DF131;
+			packageReferences = (
+				DE8BE3032DE6294C006E73A3 /* XCRemoteSwiftPackageReference "Swinject" */,
+			);
 			productRefGroup = DEE1BB402DE4D95F004DF131 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -358,17 +387,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEE1BB942DE4FDAD004DF131 /* TMDBService.swift in Sources */,
 				DEE1BB7E2DE4DC01004DF131 /* BaseViewController.swift in Sources */,
 				DEE1BB882DE4F6E2004DF131 /* MovieListInteractor.swift in Sources */,
 				DEE1BB472DE4D95F004DF131 /* MovieListViewController.swift in Sources */,
+				DEE1BB9C2DE50A4A004DF131 /* NetworkService.swift in Sources */,
 				DEE1BB8A2DE4F6EB004DF131 /* MovieListRouter.swift in Sources */,
 				DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */,
 				DEE1BB812DE4DC5C004DF131 /* LoadingShowable.swift in Sources */,
 				DEE1BB452DE4D95F004DF131 /* SceneDelegate.swift in Sources */,
 				DEE1BB842DE4DC7F004DF131 /* LoadingView.swift in Sources */,
 				DEE1BB8C2DE4F6FA004DF131 /* MovieListEntity.swift in Sources */,
+				DEE1BB962DE4FDBA004DF131 /* APIKey.swift in Sources */,
+				DEE1BB8E2DE4FC15004DF131 /* NetworkError.swift in Sources */,
 				DEE1BB4D2DE4D95F004DF131 /* TurkcellCase.xcdatamodeld in Sources */,
+				DEE1BB982DE500A4004DF131 /* MovieListResponse.swift in Sources */,
+				DEE1BB9A2DE5045E004DF131 /* NetworkReachability.swift in Sources */,
 				DEE1BB862DE4F6D3004DF131 /* MovieListPresenter.swift in Sources */,
+				DEE1BB902DE4FD95004DF131 /* TMDBEndpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,6 +743,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DE8BE3032DE6294C006E73A3 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DE8BE3042DE6294C006E73A3 /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DE8BE3032DE6294C006E73A3 /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		DEE1BB4B2DE4D95F004DF131 /* TurkcellCase.xcdatamodeld */ = {
