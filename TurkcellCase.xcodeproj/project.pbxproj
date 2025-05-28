@@ -12,6 +12,8 @@
 		DE8BE30B2DE640F2006E73A3 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */; };
 		DE8BE30E2DE6591B006E73A3 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = DE8BE30D2DE6591B006E73A3 /* SDWebImage */; };
 		DE9D7D712DE76A6F00CC1806 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9D7D702DE76A6F00CC1806 /* LoadingCell.swift */; };
+		DE9D7D742DE770BC00CC1806 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9D7D732DE770BC00CC1806 /* MovieDetailViewController.swift */; };
+		DE9D7D762DE78B6800CC1806 /* CastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9D7D752DE78B6800CC1806 /* CastCell.swift */; };
 		DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */; };
 		DEE1BB452DE4D95F004DF131 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */; };
 		DEE1BB472DE4D95F004DF131 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB462DE4D95F004DF131 /* MovieListViewController.swift */; };
@@ -57,6 +59,8 @@
 		DE8BE3072DE63CEE006E73A3 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		DE9D7D702DE76A6F00CC1806 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
+		DE9D7D732DE770BC00CC1806 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		DE9D7D752DE78B6800CC1806 /* CastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCell.swift; sourceTree = "<group>"; };
 		DEE1BB3F2DE4D95F004DF131 /* TurkcellCase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurkcellCase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +131,15 @@
 				DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */,
 			);
 			path = SectionHeader;
+			sourceTree = "<group>";
+		};
+		DE9D7D722DE7709A00CC1806 /* MovieDetailScreen */ = {
+			isa = PBXGroup;
+			children = (
+				DE9D7D732DE770BC00CC1806 /* MovieDetailViewController.swift */,
+				DE9D7D752DE78B6800CC1806 /* CastCell.swift */,
+			);
+			path = MovieDetailScreen;
 			sourceTree = "<group>";
 		};
 		DEE1BB362DE4D95F004DF131 = {
@@ -215,6 +228,7 @@
 		DEE1BB782DE4D9E4004DF131 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				DE9D7D722DE7709A00CC1806 /* MovieDetailScreen */,
 				DEE1BB7C2DE4DB9D004DF131 /* MovieListScreen */,
 				DEE1BB7B2DE4DB98004DF131 /* Base */,
 			);
@@ -417,6 +431,7 @@
 				DEE1BB7E2DE4DC01004DF131 /* BaseViewController.swift in Sources */,
 				DEE1BB882DE4F6E2004DF131 /* MovieListInteractor.swift in Sources */,
 				DEE1BB472DE4D95F004DF131 /* MovieListViewController.swift in Sources */,
+				DE9D7D742DE770BC00CC1806 /* MovieDetailViewController.swift in Sources */,
 				DEE1BB9C2DE50A4A004DF131 /* NetworkService.swift in Sources */,
 				DEE1BB8A2DE4F6EB004DF131 /* MovieListRouter.swift in Sources */,
 				DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */,
@@ -426,6 +441,7 @@
 				DEE1BB842DE4DC7F004DF131 /* LoadingView.swift in Sources */,
 				DEE1BB8C2DE4F6FA004DF131 /* MovieListEntity.swift in Sources */,
 				DEE1BB962DE4FDBA004DF131 /* APIKey.swift in Sources */,
+				DE9D7D762DE78B6800CC1806 /* CastCell.swift in Sources */,
 				DEE1BB8E2DE4FC15004DF131 /* NetworkError.swift in Sources */,
 				DE9D7D712DE76A6F00CC1806 /* LoadingCell.swift in Sources */,
 				DEE1BB4D2DE4D95F004DF131 /* TurkcellCase.xcdatamodeld in Sources */,
