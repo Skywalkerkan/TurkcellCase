@@ -11,6 +11,7 @@
 		DE8BE3082DE63CEE006E73A3 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8BE3072DE63CEE006E73A3 /* MovieCell.swift */; };
 		DE8BE30B2DE640F2006E73A3 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */; };
 		DE8BE30E2DE6591B006E73A3 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = DE8BE30D2DE6591B006E73A3 /* SDWebImage */; };
+		DE9D7D712DE76A6F00CC1806 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9D7D702DE76A6F00CC1806 /* LoadingCell.swift */; };
 		DEE1BB432DE4D95F004DF131 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */; };
 		DEE1BB452DE4D95F004DF131 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */; };
 		DEE1BB472DE4D95F004DF131 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE1BB462DE4D95F004DF131 /* MovieListViewController.swift */; };
@@ -55,6 +56,7 @@
 /* Begin PBXFileReference section */
 		DE8BE3072DE63CEE006E73A3 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
+		DE9D7D702DE76A6F00CC1806 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		DEE1BB3F2DE4D95F004DF131 /* TurkcellCase.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TurkcellCase.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				DE8BE3072DE63CEE006E73A3 /* MovieCell.swift */,
+				DE9D7D702DE76A6F00CC1806 /* LoadingCell.swift */,
 			);
 			path = MovieCell;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				DEE1BB8C2DE4F6FA004DF131 /* MovieListEntity.swift in Sources */,
 				DEE1BB962DE4FDBA004DF131 /* APIKey.swift in Sources */,
 				DEE1BB8E2DE4FC15004DF131 /* NetworkError.swift in Sources */,
+				DE9D7D712DE76A6F00CC1806 /* LoadingCell.swift in Sources */,
 				DEE1BB4D2DE4D95F004DF131 /* TurkcellCase.xcdatamodeld in Sources */,
 				DE8BE3082DE63CEE006E73A3 /* MovieCell.swift in Sources */,
 				DEE1BB9A2DE5045E004DF131 /* NetworkReachability.swift in Sources */,

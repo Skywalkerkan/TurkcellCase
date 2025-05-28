@@ -24,7 +24,7 @@ final class MovieListViewController: BaseViewController {
             let isTablet = UIDevice.current.userInterfaceIdiom == .pad
             
             let itemsPerRow: CGFloat = isTablet ? 4.0 : 3
-            let itemHeight: CGFloat = isTablet ? 330 : 185
+            let itemHeight: CGFloat = isTablet ? 330 : 200
             
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0 / itemsPerRow),
@@ -59,7 +59,7 @@ final class MovieListViewController: BaseViewController {
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
@@ -69,13 +69,11 @@ final class MovieListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-
         presenter.viewDidLoad()
-
     }
     
     private func setupViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         
         view.addSubview(collectionView)
 
@@ -101,7 +99,7 @@ final class MovieListViewController: BaseViewController {
                 print("🎬 \(movie.title ?? "title yok")")
             }
         case .failure(let error):
-            print("❌ Hata: \(error.localizedDescription)")
+            print(" Hata: \(error.localizedDescription)")
         }
     }
 }
@@ -114,18 +112,27 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return presenter.getMovieCount(for: section)
+        return presenter.getMovieCount(for: section) + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let movies = presenter.getMoviesForSection(indexPath.section)
+        
+        if indexPath.item == movies.count {
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.identifier, for: indexPath) as? LoadingCell {
+                cell.startLoading()
+                return cell
+            }
+        }
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) as? MovieCell else {
             return UICollectionViewCell()
         }
-        let movies = presenter.getMoviesForSection(indexPath.section)
         let movie = movies[indexPath.item]
         cell.configure(with: movie)
         return cell
     }
+
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Film section\(indexPath.section), itemi \(indexPath.item)")
@@ -134,6 +141,17 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         print(movie.backdropPath)
         presenter.didSelectMovie(movie)
     }
+    
+  /*  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let totalSections = presenter.sectionCount
+        let moviesInSection = presenter.getMovieCount(for: indexPath.section)
+        
+        if indexPath.section == totalSections - 1 && indexPath.item >= moviesInSection - 2 {
+            // Son 2 elemana gelince yeni veriyi yükle
+            presenter.loadMoreMoviesIfNeeded(for: indexPath.section)
+        }
+    }*/
+
     
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
@@ -160,6 +178,7 @@ extension MovieListViewController: MovieListViewControllerProtocol {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "MovieCell")
+        collectionView.register(LoadingCell.self, forCellWithReuseIdentifier: LoadingCell.identifier)
         collectionView.register(
             SectionHeaderView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -168,7 +187,6 @@ extension MovieListViewController: MovieListViewControllerProtocol {
     }
     
     func reloadData() {
-        print(presenter.getMovieCount(for: 0))
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }

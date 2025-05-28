@@ -15,6 +15,7 @@ final class MovieCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.backgroundColor = .systemGray5
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 8
         return imageView
@@ -37,7 +38,7 @@ final class MovieCell: UICollectionViewCell {
         let baseURL = "https://image.tmdb.org/t/p/w500"
         if let posterPath = movie.posterPath {
             let fullURL = URL(string: baseURL + posterPath)
-            imageView.sd_setImage(with: fullURL, placeholderImage: UIImage(systemName: "film"), options: [.continueInBackground, .highPriority])
+            imageView.sd_setImage(with: fullURL, placeholderImage: UIImage(systemName: "drop.halffull"), options: [.continueInBackground, .highPriority])
         } else {
             imageView.image = UIImage(systemName: "film")
         }

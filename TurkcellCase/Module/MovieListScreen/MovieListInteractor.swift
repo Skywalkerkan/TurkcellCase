@@ -59,7 +59,6 @@ extension MovieListInteractor: MovieListInteractorProtocol {
                 if let error = errors.first {
                     self?.output?.fetchMoviesFailure(error)
                 } else {
-                    print(results)
                     self?.output?.fetchAllMovieListsSuccess(results)
                 }
             }
