@@ -203,7 +203,6 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
-        setupNavigationBar()
         registerCollectionViewCells()
         
         movie = Movie(
@@ -221,6 +220,47 @@ class MovieDetailViewController: UIViewController {
             voteAverage: 8.8,
             voteCount: 32000
         )
+        
+        // iPad'de split view'dayken sol üst geri butonu
+        if UIDevice.current.userInterfaceIdiom == .pad,
+           let split = splitViewController as? UISplitViewController {
+            setupBackButton()
+        }
+        
+        
+    }
+    
+    private func setupBackButton() {
+        let backButton = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backButtonTapped)
+        )
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
+    @objc private func backButtonTapped() {
+        // Split view'ı kapat, tek column'a dön
+        guard let split = splitViewController as? UISplitViewController,
+              let window = view.window else { return }
+        
+        // Primary column'daki list VC'yi al
+        guard let primaryNav = split.viewController(for: .primary) as? UINavigationController,
+              let listVC = primaryNav.viewControllers.first else { return }
+        
+        // Sağa doğru slide-out animasyonu
+        let singleNav = UINavigationController(rootViewController: listVC)
+        
+        // Transition animasyonu: sağa doğru slide
+        UIView.transition(with: window, duration: 0.35, options: [.curveEaseInOut], animations: {
+            // Detail view'ı sağa kaydır
+            self.view.transform = CGAffineTransform(translationX: window.bounds.width, y: 0)
+        }) { _ in
+            // Animasyon tamamlandıktan sonra root'u değiştir
+            window.rootViewController = singleNav
+            self.view.transform = .identity // Transform'u resetle
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -419,19 +459,7 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
-    private func setupNavigationBar() {
-        navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.largeTitleDisplayMode = .never
-        
-        let backButton = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-        backButton.tintColor = UIColor.label
-        navigationItem.leftBarButtonItem = backButton
-    }
+
     
     private func registerCollectionViewCells() {
         castCollectionView.register(CastCell.self, forCellWithReuseIdentifier: "CastCell")
@@ -478,9 +506,6 @@ class MovieDetailViewController: UIViewController {
         present(activityViewController, animated: true)
     }
     
-    @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
 }
 
 extension MovieDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {

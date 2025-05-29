@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE5FF9822DE88E2600D35C8B /* MoviePlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5FF9812DE88E2600D35C8B /* MoviePlayerViewController.swift */; };
 		DE8BE3052DE6294C006E73A3 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = DE8BE3042DE6294C006E73A3 /* Swinject */; };
 		DE8BE3082DE63CEE006E73A3 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8BE3072DE63CEE006E73A3 /* MovieCell.swift */; };
 		DE8BE30B2DE640F2006E73A3 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */; };
@@ -56,6 +57,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DE5FF9812DE88E2600D35C8B /* MoviePlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePlayerViewController.swift; sourceTree = "<group>"; };
 		DE8BE3072DE63CEE006E73A3 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		DE8BE30A2DE640F2006E73A3 /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		DE9D7D702DE76A6F00CC1806 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
@@ -116,6 +118,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DE5FF9832DE8D44000D35C8B /* MoviePlayerScreen */ = {
+			isa = PBXGroup;
+			children = (
+				DE5FF9812DE88E2600D35C8B /* MoviePlayerViewController.swift */,
+			);
+			path = MoviePlayerScreen;
+			sourceTree = "<group>";
+		};
 		DE8BE3062DE63CD5006E73A3 /* MovieCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -228,6 +238,7 @@
 		DEE1BB782DE4D9E4004DF131 /* Module */ = {
 			isa = PBXGroup;
 			children = (
+				DE5FF9832DE8D44000D35C8B /* MoviePlayerScreen */,
 				DE9D7D722DE7709A00CC1806 /* MovieDetailScreen */,
 				DEE1BB7C2DE4DB9D004DF131 /* MovieListScreen */,
 				DEE1BB7B2DE4DB98004DF131 /* Base */,
@@ -429,6 +440,7 @@
 			files = (
 				DEE1BB942DE4FDAD004DF131 /* TMDBService.swift in Sources */,
 				DEE1BB7E2DE4DC01004DF131 /* BaseViewController.swift in Sources */,
+				DE5FF9822DE88E2600D35C8B /* MoviePlayerViewController.swift in Sources */,
 				DEE1BB882DE4F6E2004DF131 /* MovieListInteractor.swift in Sources */,
 				DEE1BB472DE4D95F004DF131 /* MovieListViewController.swift in Sources */,
 				DE9D7D742DE770BC00CC1806 /* MovieDetailViewController.swift in Sources */,

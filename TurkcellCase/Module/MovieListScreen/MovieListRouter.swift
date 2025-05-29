@@ -5,6 +5,7 @@
 //  Created by Erkan on 26.05.2025.
 //
 
+
 import UIKit
 
 enum MovieRoutes {
@@ -18,6 +19,9 @@ protocol MovieListRouterProtocol {
 final class MovieRouter {
     
     weak var viewController: MovieListViewController?
+    private var detailViewController: MovieDetailViewController?
+    private var isDetailVisible = false
+    private var detailLeadingConstraint: NSLayoutConstraint?
     
     static func createModule() -> MovieListViewController {
         let view = MovieListViewController()
@@ -36,13 +40,16 @@ final class MovieRouter {
 extension MovieRouter: MovieListRouterProtocol {
     
     func navigate(_ route: MovieRoutes) {
-        switch route {
-        case .detail(let movie):
-            DispatchQueue.main.async {
-                print(movie)
-                //let detailVC = MovieDetailRouter.createModule(movie: movie)
-               // self.viewController?.navigationController?.pushViewController(detailVC, animated: true)
-            }
+        guard case .detail(let movie) = route else { return }
+        
+        guard UIDevice.current.userInterfaceIdiom == .pad else {
+            let detailVC = MovieDetailViewController()
+            detailVC.movie = movie
+            viewController?.navigationController?.pushViewController(detailVC, animated: true)
+            return
         }
+        
+        viewController?.showOverlayDetail(with: movie)
     }
+    
 }
