@@ -7,6 +7,13 @@
 
 import UIKit
 
+protocol MovieDetailViewControllerProtocol: AnyObject {
+    func reloadData()
+    func hideLoadingView()
+    func showLoadingView()
+    func showError(_ error: String)
+}
+
 class MovieDetailViewController: UIViewController {
     
     private let scrollView: UIScrollView = {
@@ -185,11 +192,14 @@ class MovieDetailViewController: UIViewController {
         return button
     }()
 
-    var movie: Movie? {
+   /* var movie: Movie? {
         didSet {
             updateUI()
         }
-    }
+    }*/
+    
+    var movie: Movie?
+
     
     private let castMembers = [
         ("Leonardo DiCaprio", "Actor", "https://example.com/leo.jpg"),
@@ -204,8 +214,7 @@ class MovieDetailViewController: UIViewController {
         setupUI()
         setupConstraints()
         registerCollectionViewCells()
-        
-        movie = Movie(
+        /*movie = Movie(
             adult: false,
             backdropPath: "https://image.tmdb.org/t/p/w780/s3TBrRGB1iav7gFOCNx3H31MoES.jpg",
             genreIds: [28, 12, 878],
@@ -219,16 +228,84 @@ class MovieDetailViewController: UIViewController {
             video: false,
             voteAverage: 8.8,
             voteCount: 32000
-        )
+        )*/
         
-        // iPad'de split view'dayken sol üst geri butonu
+        print(movie)
+        configureViews()
+
+        
         if UIDevice.current.userInterfaceIdiom == .pad,
            let split = splitViewController as? UISplitViewController {
             setupBackButton()
         }
         
-        
     }
+    
+    private func configureViews() {
+        guard let movie = movie else { return }
+
+        titleLabel.text = movie.title ?? "Bilinmeyen Başlık"
+
+        if let releaseDate = movie.releaseDate, let year = releaseDate.split(separator: "-").first {
+            yearLabel.text = String(year)
+        } else {
+            yearLabel.text = "Yıl Bilinmiyor"
+        }
+
+        if let rating = movie.voteAverage {
+            ratingLabel.text = String(format: "%.1f", rating)
+        } else {
+            ratingLabel.text = "-"
+        }
+
+        if let genreIds = movie.genreIds {
+            let genres = genreIds.compactMap { genreName(for: $0) }
+            genreLabel.text = genres.joined(separator: " • ")
+        } else {
+            genreLabel.text = "Tür bilgisi yok"
+        }
+
+        durationLabel.text = "2 saat 28 dk"
+
+        overviewLabel.text = movie.overview ?? "Açıklama bulunmuyor."
+
+        if let backdropPath = movie.backdropPath {
+            let url = "https://image.tmdb.org/t/p/w780\(backdropPath)"
+            ImageLoaderManager.shared.loadImage(from: url, into: backdropImageView, placeholder: UIImage(named: "placeholder"))
+        }
+
+        if let posterPath = movie.posterPath {
+            let url = "https://image.tmdb.org/t/p/w500\(posterPath)"
+            ImageLoaderManager.shared.loadImage(from: url, into: posterImageView, placeholder: UIImage(named: "placeholder"))
+        }
+
+    }
+
+    private func genreName(for id: Int) -> String? {
+        let genres: [Int: String] = [
+            28: "Aksiyon",
+            12: "Macera",
+            16: "Animasyon",
+            35: "Komedi",
+            80: "Suç",
+            99: "Belgesel",
+            18: "Dram",
+            10751: "Aile",
+            14: "Fantastik",
+            36: "Tarih",
+            27: "Korku",
+            10402: "Müzik",
+            9648: "Gizem",
+            10749: "Romantik",
+            878: "Bilim Kurgu",
+            10770: "TV Filmi",
+            53: "Gerilim",
+            10752: "Savaş",
+            37: "Western"
+        ]
+        return genres[id]
+    }
+
     
     private func setupBackButton() {
         let backButton = UIBarButtonItem(
@@ -241,25 +318,19 @@ class MovieDetailViewController: UIViewController {
     }
     
     @objc private func backButtonTapped() {
-        // Split view'ı kapat, tek column'a dön
         guard let split = splitViewController as? UISplitViewController,
               let window = view.window else { return }
         
-        // Primary column'daki list VC'yi al
         guard let primaryNav = split.viewController(for: .primary) as? UINavigationController,
               let listVC = primaryNav.viewControllers.first else { return }
         
-        // Sağa doğru slide-out animasyonu
         let singleNav = UINavigationController(rootViewController: listVC)
         
-        // Transition animasyonu: sağa doğru slide
         UIView.transition(with: window, duration: 0.35, options: [.curveEaseInOut], animations: {
-            // Detail view'ı sağa kaydır
             self.view.transform = CGAffineTransform(translationX: window.bounds.width, y: 0)
         }) { _ in
-            // Animasyon tamamlandıktan sonra root'u değiştir
             window.rootViewController = singleNav
-            self.view.transform = .identity // Transform'u resetle
+            self.view.transform = .identity
         }
     }
     
@@ -521,3 +592,23 @@ extension MovieDetailViewController: UICollectionViewDataSource, UICollectionVie
     }
 }
 
+extension MovieDetailViewController: MovieDetailViewControllerProtocol {
+    
+    
+    func reloadData() {
+        
+    }
+    
+    func hideLoadingView() {
+        
+    }
+    
+    func showLoadingView() {
+        
+    }
+    
+    func showError(_ error: String) {
+        
+    }
+    
+}

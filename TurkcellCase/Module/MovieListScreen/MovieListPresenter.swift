@@ -65,21 +65,7 @@ extension MovieListPresenter: MovieListPresenterProtocol {
     }
     
     func didSelectMovie(_ movie: Movie) {
-        router.navigate(.detail(movie: Movie(
-            adult: false,
-            backdropPath: "https://image.tmdb.org/t/p/w780/s3TBrRGB1iav7gFOCNx3H31MoES.jpg",
-            genreIds: [28, 12, 878],
-            id: 27205,
-            originalTitle: "Inception",
-            overview: "A skilled thief is offered a chance to have his past crimes forgiven if he can implant an idea into a target's subconscious.",
-            popularity: 1500.75,
-            posterPath: "https://image.tmdb.org/t/p/w500/9gk7adHYeDvHkCSEqAvQNLV5Uge.jpg",
-            releaseDate: "2010-07-16",
-            title: "Inception",
-            video: false,
-            voteAverage: 8.8,
-            voteCount: 32000
-        )))
+        router.navigate(.detail(movie: movie))
     }
 }
 
