@@ -9,10 +9,12 @@ import Foundation
 
 protocol MovieListInteractorProtocol {
     func fetchAllMovies()
+    func fetchMoreMovies(category: MovieCategory, page: Int)
 }
 
 protocol MovieListInteractorOutputProtocol: AnyObject {
     func fetchAllMovieListsSuccess(_ movies: [MovieCategory: [Movie]])
+    func fetchMoreMoviesSuccess(category: MovieCategory, movies: [Movie])
     func fetchMoviesFailure(_ error: NetworkError)
 }
 
@@ -60,6 +62,22 @@ extension MovieListInteractor: MovieListInteractorProtocol {
                     self?.output?.fetchMoviesFailure(error)
                 } else {
                     self?.output?.fetchAllMovieListsSuccess(results)
+                }
+            }
+        }
+    }
+    
+    func fetchMoreMovies(category: MovieCategory, page: Int) {
+        Task {
+            let result = await movieService.fetchMovies(category: category, page: page)
+            
+            DispatchQueue.main.async { [weak self] in
+                switch result {
+                case .success(let response):
+                    let movies = response.results ?? []
+                    self?.output?.fetchMoreMoviesSuccess(category: category, movies: movies)
+                case .failure(let error):
+                    self?.output?.fetchMoviesFailure(error)
                 }
             }
         }

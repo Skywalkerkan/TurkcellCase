@@ -145,15 +145,15 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
         presenter.didSelectMovie(movie)
     }
     
-  /*  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        let totalSections = presenter.sectionCount
-        let moviesInSection = presenter.getMovieCount(for: indexPath.section)
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let movies = presenter.getMoviesForSection(indexPath.section)
         
-        if indexPath.section == totalSections - 1 && indexPath.item >= moviesInSection - 2 {
-            // Son 2 elemana gelince yeni veriyi yükle
+        // Loading cell görüntülendiğinde pagination tetikle
+        if indexPath.item == movies.count {
             presenter.loadMoreMoviesIfNeeded(for: indexPath.section)
         }
-    }*/
+    }
+    
 
     
     func collectionView(_ collectionView: UICollectionView,

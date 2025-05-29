@@ -14,11 +14,15 @@ protocol MovieListPresenterProtocol {
     func getMovieCount(for section: Int) -> Int
     func getSectionTitle(for section: Int) -> String
     func didSelectMovie(_ movie: Movie)
+    func loadMoreMoviesIfNeeded(for section: Int)
 }
 
 final class MovieListPresenter {
     
     private var moviesByCategory: [MovieCategory: [Movie]] = [:]
+    private var currentPages: [MovieCategory: Int] = [:]
+    private var isLoadingMore: [MovieCategory: Bool] = [:]
+    
     private let interactor: MovieListInteractorProtocol
     private let router: MovieListRouterProtocol
     unowned var view: MovieListViewControllerProtocol
@@ -29,13 +33,17 @@ final class MovieListPresenter {
         self.view = view
         self.interactor = interactor
         self.router = router
+        
+        sectionCategories.forEach { category in
+            currentPages[category] = 1
+            isLoadingMore[category] = false
+        }
     }
 }
 
 extension MovieListPresenter: MovieListPresenterProtocol {
     
     func viewDidLoad() {
-        
         view.setupCollectionView()
         interactor.fetchAllMovies()
         view.reloadData()
@@ -67,6 +75,23 @@ extension MovieListPresenter: MovieListPresenterProtocol {
     func didSelectMovie(_ movie: Movie) {
         router.navigate(.detail(movie: movie))
     }
+    
+    func loadMoreMoviesIfNeeded(for section: Int) {
+        guard section < sectionCategories.count else { return }
+        
+        let category = sectionCategories[section]
+        
+        guard isLoadingMore[category] != true else { return }
+        
+        currentPages[category] = (currentPages[category] ?? 1) + 1
+        let nextPage = currentPages[category] ?? 2
+        
+        isLoadingMore[category] = true
+        
+        print("Loading more for \(category) - Page: \(nextPage)")
+        
+        interactor.fetchMoreMovies(category: category, page: nextPage)
+    }
 }
 
 extension MovieListPresenter: MovieListInteractorOutputProtocol {
@@ -75,9 +100,26 @@ extension MovieListPresenter: MovieListInteractorOutputProtocol {
         self.moviesByCategory = movies
         view.reloadData()
     }
-
+    
+    func fetchMoreMoviesSuccess(category: MovieCategory, movies: [Movie]) {
+        if var existingMovies = moviesByCategory[category] {
+            existingMovies.append(contentsOf: movies)
+            moviesByCategory[category] = existingMovies
+        } else {
+            moviesByCategory[category] = movies
+        }
+        isLoadingMore[category] = false
+        
+        view.reloadData()
+        
+        print(" Loaded \(movies.count) more movies for \(category)")
+    }
     
     func fetchMoviesFailure(_ error: NetworkError) {
+        sectionCategories.forEach { category in
+            isLoadingMore[category] = false
+        }
+        
         view.showError(error.localizedDescription)
     }
 }
