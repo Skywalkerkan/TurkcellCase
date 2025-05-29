@@ -9,6 +9,7 @@ import UIKit
 
 protocol MovieDetailViewControllerProtocol: AnyObject {
     func reloadData()
+    func setupCollectionView()
     func hideLoadingView()
     func showLoadingView()
     func showError(_ error: String)
@@ -209,11 +210,17 @@ class MovieDetailViewController: UIViewController {
         ("Celine Dion", "Singer", "https://example.com/celine.jpg")
     ]
     
+    var presenter: MovieDetailPresenterProtocol!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
         registerCollectionViewCells()
+        print(movie?.id)
+        if let movieId = movie?.id {
+            presenter.fetchCredits(for: movieId)
+        }
         /*movie = Movie(
             adult: false,
             backdropPath: "https://image.tmdb.org/t/p/w780/s3TBrRGB1iav7gFOCNx3H31MoES.jpg",
@@ -230,7 +237,6 @@ class MovieDetailViewController: UIViewController {
             voteCount: 32000
         )*/
         
-        print(movie)
         configureViews()
 
         
@@ -581,22 +587,28 @@ class MovieDetailViewController: UIViewController {
 
 extension MovieDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return castMembers.count
+        return presenter.castCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CastCell", for: indexPath) as! CastCell
-        let castMember = castMembers[indexPath.item]
-        cell.configure(with: castMember.0, role: castMember.1, imageURL: castMember.2)
+        if let castMember = presenter.getCastMember(at: indexPath.item) {
+            cell.configure(castMember)
+        }
         return cell
     }
 }
 
 extension MovieDetailViewController: MovieDetailViewControllerProtocol {
-    
+    func setupCollectionView() {
+        
+    }
     
     func reloadData() {
-        
+        print("reloadlandı")
+        DispatchQueue.main.async {
+            self.castCollectionView.reloadData()
+        }
     }
     
     func hideLoadingView() {

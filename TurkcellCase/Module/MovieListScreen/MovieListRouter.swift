@@ -43,13 +43,12 @@ extension MovieRouter: MovieListRouterProtocol {
         guard case .detail(let movie) = route else { return }
         
         guard UIDevice.current.userInterfaceIdiom == .pad else {
-            let detailVC = MovieDetailViewController()
-            detailVC.movie = movie
+            let detailVC = MovieDetailRouter.createModule(with: movie)
             viewController?.navigationController?.pushViewController(detailVC, animated: true)
             return
         }
         
         viewController?.showOverlayDetail(with: movie)
     }
-    
 }
+

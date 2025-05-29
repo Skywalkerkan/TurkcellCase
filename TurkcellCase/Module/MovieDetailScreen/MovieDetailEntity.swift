@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct Cast: Codable {
+struct MovieCredit: Codable {
     let id: Int?
-    let cast, crew: [CastElement]?
+    let cast: [Cast]?
 }
 
-struct CastElement: Codable {
+struct Cast: Codable {
     let adult: Bool?
     let gender, id: Int?
     let knownForDepartment: Department?

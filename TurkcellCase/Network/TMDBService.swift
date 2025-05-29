@@ -10,6 +10,7 @@ import Foundation
 protocol MovieServiceProtocol {
     func fetchMovies(category: MovieCategory, page: Int) async -> Result<MovieListResponse, NetworkError>
     func fetchMovieDetail(movieID: Int) async -> Result<Movie, NetworkError>
+    func fetchMovieCredits(movieID: Int) async -> Result<MovieCredit, NetworkError>
 }
 
 final class TMDBService: MovieServiceProtocol {
@@ -26,5 +27,9 @@ final class TMDBService: MovieServiceProtocol {
     
     func fetchMovieDetail(movieID: Int) async -> Result<Movie, NetworkError> {
         await networkService.request(MovieEndpoint.movieDetail(id: movieID), responseType: Movie.self)
+    }
+    
+    func fetchMovieCredits(movieID: Int) async -> Result<MovieCredit, NetworkError> {
+        await networkService.request(MovieEndpoint.movieCredits(id: movieID), responseType: MovieCredit.self)
     }
 }

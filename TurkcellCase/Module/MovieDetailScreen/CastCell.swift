@@ -21,7 +21,7 @@ class CastCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
         label.textColor = .label
         label.textAlignment = .center
         label.numberOfLines = 2
@@ -61,19 +61,38 @@ class CastCell: UICollectionViewCell {
             imageView.heightAnchor.constraint(equalToConstant: 80),
             
             nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
+            nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
             
-            roleLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 2),
-            roleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            roleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-           // roleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor)
+            /*roleLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 2),
+            roleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
+            roleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
+            roleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -4)*/
         ])
     }
     
+    // MARK: - Configure
     
-    func configure(with name: String, role: String, imageURL: String) {
-        nameLabel.text = name
-        roleLabel.text = role
+    func configure(_ cast: Cast) {
+        nameLabel.text = cast.name ?? "Bilinmiyor"
+        
+        if let character = cast.character, !character.isEmpty {
+            roleLabel.text = character
+        } else if let department = cast.department?.rawValue {
+            roleLabel.text = department
+        } else {
+            roleLabel.text = "Rol Bilinmiyor"
+        }
+        
+        if let profilePath = cast.profilePath {
+            let imageUrl = "https://image.tmdb.org/t/p/w500\(profilePath)"
+            ImageLoaderManager.shared.loadImage(
+                from: imageUrl,
+                into: imageView,
+                placeholder: UIImage(systemName: "person.fill")
+            )
+        } else {
+            imageView.image = UIImage(systemName: "person.fill")
+        }
     }
 }

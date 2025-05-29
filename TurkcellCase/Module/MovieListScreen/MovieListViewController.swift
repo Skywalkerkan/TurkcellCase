@@ -208,15 +208,12 @@ extension MovieListViewController: MovieListViewControllerProtocol {
     }
 
     func showOverlayDetail(with movie: Movie) {
-        // Daha önce eklenmişse güncelle
         if let detailVC = overlayDetailViewController as? MovieDetailViewController {
             detailVC.movie = movie
             return
         }
 
-        let detailVC = MovieDetailViewController()
-        detailVC.movie = movie
-
+        let detailVC = MovieDetailRouter.createModule(with: movie)
         let detailNav = UINavigationController(rootViewController: detailVC)
         detailNav.view.translatesAutoresizingMaskIntoConstraints = false
 
@@ -226,11 +223,9 @@ extension MovieListViewController: MovieListViewControllerProtocol {
 
         overlayDetailViewController = detailVC
 
-        // Close button ekle
         let close = UIBarButtonItem(title: "Kapat", style: .plain, target: self, action: #selector(closeOverlay))
         detailVC.navigationItem.leftBarButtonItem = close
 
-        // Constraints
         overlayLeadingConstraint = detailNav.view.leadingAnchor.constraint(equalTo: view.trailingAnchor)
 
         NSLayoutConstraint.activate([
@@ -242,7 +237,6 @@ extension MovieListViewController: MovieListViewControllerProtocol {
 
         view.layoutIfNeeded()
 
-        // Animasyonla göster
         overlayLeadingConstraint?.isActive = false
         overlayLeadingConstraint = detailNav.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width * 0.55)
         overlayLeadingConstraint?.isActive = true
@@ -251,6 +245,7 @@ extension MovieListViewController: MovieListViewControllerProtocol {
             self.view.layoutIfNeeded()
         }
     }
+
 
     @objc private func closeOverlay() {
         guard let detailNav = overlayDetailViewController?.navigationController else { return }
