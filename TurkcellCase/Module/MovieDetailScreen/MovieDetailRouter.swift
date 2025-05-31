@@ -45,9 +45,10 @@ extension MovieDetailRouter: MovieDetailRouterProtocol {
             viewController?.navigationController?.pushViewController(castDetailVC, animated: true)
             
         case .playMovie(let videoID):
-            let playerVC = MoviePlayerViewController()
+            //let playerVC = MoviePlayerViewController()
             /*playerVC.videoID = videoID
             viewController?.present(playerVC, animated: true, completion: nil)*/
+            let playerVC = MoviePlayerRouter.createModule(movieURL: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8")
             viewController?.navigationController?.pushViewController(playerVC, animated: true)
         }
     }

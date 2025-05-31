@@ -1,5 +1,5 @@
 //
-//  DenemeViewController.swift
+//  MoviePlayerViewController.swift
 //  TurkcellCase
 //
 //  Created by Erkan on 29.05.2025.
@@ -7,22 +7,25 @@
 
 import UIKit
 import AVFoundation
-import AVKit
 
-class MoviePlayerViewController: UIViewController {
+protocol MoviePlayerViewControllerProtocol: AnyObject {
+    func updatePlayPauseButton(isPlaying: Bool)
+    func updateVolumeIcon(isMuted: Bool, volume: Float)
+    func updateProgress(currentTime: String, progress: Float)
+    func updateTotalTime(_ totalTime: String)
+    func setupPlayerLayer(with player: AVPlayer)
+    func showLoadingIndicator()
+    func hideLoadingIndicator()
+    func showControls()
+    func hideControls()
+}
+
+final class MoviePlayerViewController: UIViewController {
     
-    private var player: AVPlayer?
+    var presenter: MoviePlayerPresenterProtocol!
     private var playerLayer: AVPlayerLayer?
-    private var timeObserver: Any?
-    private var isPlaying = false
     private var isFullscreen = false
-    private var isMuted = false
-    private var originalOrientation: UIInterfaceOrientationMask = .portrait
-    
-    var movieTitle: String = "Örnek Dizi"
-    var movieDescription: String = "Örnek film açıklamasııııı "
-    var movieURL = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
-    
+        
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -101,9 +104,9 @@ class MoviePlayerViewController: UIViewController {
         slider.minimumTrackTintColor = .systemBlue
         slider.maximumTrackTintColor = UIColor.white.withAlphaComponent(0.3)
         slider.thumbTintColor = .white
-        slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
-        slider.addTarget(self, action: #selector(sliderTouchBegan), for: .touchDown)
-        slider.addTarget(self, action: #selector(sliderTouchEnded), for: [.touchUpInside, .touchUpOutside])
+        slider.addTarget(self, action: #selector(progressSliderValueChanged), for: .valueChanged)
+        slider.addTarget(self, action: #selector(progressSliderTouchBegan), for: .touchDown)
+        slider.addTarget(self, action: #selector(progressSliderTouchEnded), for: [.touchUpInside, .touchUpOutside])
         return slider
     }()
     
@@ -163,21 +166,21 @@ class MoviePlayerViewController: UIViewController {
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
-    
-    // MARK: - Constraints
+        
+    var movieTitle: String = "Örnek Dizi"
+    var movieDescription: String = "Örnek film açıklamasııııı "
+    var movieURL: String = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
+        
     private var playerHeightConstraint: NSLayoutConstraint!
     private var contentViewBottomConstraint: NSLayoutConstraint!
     private var fullscreenConstraints: [NSLayoutConstraint] = []
     private var normalConstraints: [NSLayoutConstraint] = []
-    
-    // MARK: - Lifecycle
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupPlayer()
-        setupGestures()
-        setupNotifications()
+        presenter.viewDidLoad()
+        listeOrientation()
     }
     
     override func viewDidLayoutSubviews() {
@@ -185,23 +188,36 @@ class MoviePlayerViewController: UIViewController {
         playerLayer?.frame = playerContainerView.bounds
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        pausePlayer()
+    private func listeOrientation(){
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deviceOrientationDidChange),
+            name: UIDevice.orientationDidChangeNotification,
+            object: nil
+        )
     }
     
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return isFullscreen ? .landscape : .portrait
-    }
-    
-    override var shouldAutorotate: Bool {
-        return true
+    @objc private func deviceOrientationDidChange() {
+        let orientation = UIDevice.current.orientation
+
+        switch orientation {
+        case .landscapeLeft, .landscapeRight:
+            if !isFullscreen {
+                enterFullscreen()
+            }
+        case .portrait:
+            if isFullscreen {
+                exitFullscreen()
+            }
+        default:
+            break
+        }
     }
     
     deinit {
-        cleanup()
+        NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
     }
-    
+
     
     private func setupUI() {
         view.backgroundColor = .systemBackground
@@ -214,7 +230,6 @@ class MoviePlayerViewController: UIViewController {
         contentView.addSubview(movieTitleLabel)
         contentView.addSubview(movieDescriptionLabel)
         
-        // Player controls
         playerContainerView.addSubview(controlsContainerView)
         playerContainerView.addSubview(loadingIndicator)
         controlsContainerView.addSubview(playPauseButton)
@@ -226,6 +241,7 @@ class MoviePlayerViewController: UIViewController {
         controlsContainerView.addSubview(totalTimeLabel)
         
         setupConstraints()
+        setupGestures()
     }
     
     private func setupConstraints() {
@@ -246,7 +262,7 @@ class MoviePlayerViewController: UIViewController {
         NSLayoutConstraint.activate(normalConstraints)
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: playerContainerView.bottomAnchor, constant: 0),
+            scrollView.topAnchor.constraint(equalTo: playerContainerView.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -321,163 +337,20 @@ class MoviePlayerViewController: UIViewController {
         ])
     }
     
-    private func setupPlayer() {
-        guard let url = URL(string: movieURL) else { return }
-        
-        player = AVPlayer(url: url)
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer?.videoGravity = .resizeAspect
-        
-        if let playerLayer = playerLayer {
-            playerContainerView.layer.insertSublayer(playerLayer, at: 0)
-        }
-        
-        setupTimeObserver()
-        observePlayerStatus()
-        setupAudioSession()
-        loadingIndicator.startAnimating()
-    }
-    
-    private func setupAudioSession() {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-            print("Failed to set audio session: \(error)")
-        }
-    }
-    
-    private func setupTimeObserver() {
-        let interval = CMTime(seconds: 0.5, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        timeObserver = player?.addPeriodicTimeObserver(forInterval: interval, queue: .main) { [weak self] time in
-            self?.updateProgress()
-        }
-    }
-    
     private func setupGestures() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playerTapped))
         playerContainerView.addGestureRecognizer(tapGesture)
     }
-    
-    private func setupNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(playerDidFinishPlaying),
-            name: .AVPlayerItemDidPlayToEndTime,
-            object: player?.currentItem
-        )
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(orientationDidChange),
-            name: UIDevice.orientationDidChangeNotification,
-            object: nil
-        )
-    }
-        
-    private func observePlayerStatus() {
-        player?.currentItem?.addObserver(self, forKeyPath: "status", options: [.new], context: nil)
-        player?.currentItem?.addObserver(self, forKeyPath: "duration", options: [.new], context: nil)
+    @objc private func playPauseButtonTapped() {
+        presenter.playPauseTapped()
     }
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "status" {
-            if player?.currentItem?.status == .readyToPlay {
-                DispatchQueue.main.async {
-                    self.loadingIndicator.stopAnimating()
-                    self.updateTotalTime()
-                    self.controlsContainerView.alpha = 1
-                }
-            }
-        } else if keyPath == "duration" {
-            DispatchQueue.main.async {
-                self.updateTotalTime()
-            }
-        }
-    }
-    
-    private func updateProgress() {
-        guard let currentTime = player?.currentTime(),
-              let duration = player?.currentItem?.duration,
-              !duration.seconds.isNaN,
-              duration.seconds > 0 else { return }
-        
-        let currentSeconds = currentTime.seconds
-        let totalSeconds = duration.seconds
-        
-        progressSlider.value = Float(currentSeconds / totalSeconds)
-        currentTimeLabel.text = formatTime(currentSeconds)
-    }
-    
-    private func updateTotalTime() {
-        guard let duration = player?.currentItem?.duration,
-              !duration.seconds.isNaN else { return }
-        
-        totalTimeLabel.text = formatTime(duration.seconds)
-    }
-    
-    private func formatTime(_ seconds: Double) -> String {
-        let totalSeconds = Int(seconds)
-        let hours = totalSeconds / 3600
-        let minutes = (totalSeconds % 3600) / 60
-        let seconds = totalSeconds % 60
-        
-        if hours > 0 {
-            return String(format: "%d:%02d:%02d", hours, minutes, seconds)
+    @objc private func fullscreenButtonTapped() {
+        if isFullscreen {
+            exitFullscreen()
         } else {
-            return String(format: "%02d:%02d", minutes, seconds)
-        }
-    }
-    
-    private func toggleControlsVisibility() {
-        let shouldShow = controlsContainerView.alpha == 0
-
-        UIView.animate(withDuration: 0.3) {
-            self.controlsContainerView.alpha = shouldShow ? 1 : 0
-        }
-
-        if shouldShow && isPlaying {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
-                guard let self = self else { return }
-                if self.controlsContainerView.alpha > 0 && self.isPlaying {
-                    UIView.animate(withDuration: 0.3) {
-                        self.controlsContainerView.alpha = 0
-                    }
-                }
-            }
-        }
-
-        if !isPlaying {
-            UIView.animate(withDuration: 0.3) {
-                self.controlsContainerView.alpha = 1
-            }
-        }
-    }
-    
-    private func playPlayer() {
-        player?.play()
-        isPlaying = true
-        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .semibold)
-        playPauseButton.setImage(UIImage(systemName: "pause.fill", withConfiguration: config), for: .normal)
-    }
-    
-    private func pausePlayer() {
-        player?.pause()
-        isPlaying = false
-        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .semibold)
-        playPauseButton.setImage(UIImage(systemName: "play.fill", withConfiguration: config), for: .normal)
-    }
-    
-    private func updateVolumeUI() {
-        let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
-        if isMuted || volumeSlider.value == 0 {
-            volumeButton.setImage(UIImage(systemName: "speaker.slash.fill", withConfiguration: config), for: .normal)
-        } else if volumeSlider.value < 0.3 {
-            volumeButton.setImage(UIImage(systemName: "speaker.1.fill", withConfiguration: config), for: .normal)
-        } else if volumeSlider.value < 0.7 {
-            volumeButton.setImage(UIImage(systemName: "speaker.2.fill", withConfiguration: config), for: .normal)
-        } else {
-            volumeButton.setImage(UIImage(systemName: "speaker.3.fill", withConfiguration: config), for: .normal)
+            enterFullscreen()
         }
     }
     
@@ -544,88 +417,160 @@ class MoviePlayerViewController: UIViewController {
             }
         }
     }
-        
-    @objc private func playPauseButtonTapped() {
-        if isPlaying {
-            pausePlayer()
-        } else {
-            playPlayer()
-            toggleControlsVisibility()
-        }
-    }
-    
-    @objc private func fullscreenButtonTapped() {
-        if isFullscreen {
-            exitFullscreen()
-        } else {
-            enterFullscreen()
-        }
-    }
     
     @objc private func volumeButtonTapped() {
-        isMuted.toggle()
-        player?.isMuted = isMuted
-        updateVolumeUI()
+        presenter.volumeButtonTapped()
     }
     
     @objc private func volumeSliderChanged() {
-        player?.volume = volumeSlider.value
-        isMuted = false
-        player?.isMuted = false
-        updateVolumeUI()
+        presenter.volumeSliderChanged(to: volumeSlider.value)
     }
     
-    @objc private func sliderValueChanged() {
-        guard let duration = player?.currentItem?.duration else { return }
-        let totalSeconds = duration.seconds
-        let seekTime = Double(progressSlider.value) * totalSeconds
-        let seekCMTime = CMTime(seconds: seekTime, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        player?.seek(to: seekCMTime)
+    @objc private func progressSliderValueChanged() {
+        presenter.progressSliderChanged(to: progressSlider.value)
     }
     
-    @objc private func sliderTouchBegan() {
-        player?.pause()
+    @objc private func progressSliderTouchBegan() {
+        presenter.progressSliderTouchBegan()
     }
     
-    @objc private func sliderTouchEnded() {
-        if isPlaying {
-            player?.play()
-        }
+    @objc private func progressSliderTouchEnded() {
+        presenter.progressSliderTouchEnded()
     }
     
     @objc private func playerTapped() {
-        toggleControlsVisibility()
+        presenter.playerTapped()
     }
     
     @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        presenter.backButtonTapped()
     }
-    
-    @objc private func playerDidFinishPlaying() {
-        pausePlayer()
-        player?.seek(to: .zero)
-        progressSlider.value = 0
-        currentTimeLabel.text = "00:00"
-    }
-    
-    @objc private func orientationDidChange() {
-        DispatchQueue.main.async {
-            self.playerLayer?.frame = self.playerContainerView.bounds
+        
+    func enterFullscreenLayout() {
+        isFullscreen = true
+        
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        NSLayoutConstraint.deactivate(normalConstraints)
+        
+        fullscreenConstraints = [
+            playerContainerView.topAnchor.constraint(equalTo: view.topAnchor),
+            playerContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            playerContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            playerContainerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
+        NSLayoutConstraint.activate(fullscreenConstraints)
+        
+        playerContainerView.layer.cornerRadius = 0
+        
+        scrollView.isHidden = true
+        backButton.isHidden = true
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
+        fullscreenButton.setImage(UIImage(systemName: "arrow.down.right.and.arrow.up.left", withConfiguration: config), for: .normal)
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            if #available(iOS 16.0, *) {
+                guard let windowScene = self.view.window?.windowScene else { return }
+                windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: .landscape))
+            } else {
+                UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
+            }
         }
     }
+    
+    func exitFullscreenLayout() {
+        isFullscreen = false
         
-    private func cleanup() {
-        if let timeObserver = timeObserver {
-            player?.removeTimeObserver(timeObserver)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        NSLayoutConstraint.deactivate(fullscreenConstraints)
+        
+        NSLayoutConstraint.activate(normalConstraints)
+        
+        playerContainerView.layer.cornerRadius = 12
+        
+        scrollView.isHidden = false
+        backButton.isHidden = false
+        
+        let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
+        fullscreenButton.setImage(UIImage(systemName: "arrow.up.left.and.arrow.down.right", withConfiguration: config), for: .normal)
+        
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            if #available(iOS 16.0, *) {
+                guard let windowScene = self.view.window?.windowScene else { return }
+                windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
+            } else {
+                UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+            }
         }
-        
-        player?.currentItem?.removeObserver(self, forKeyPath: "status")
-        player?.currentItem?.removeObserver(self, forKeyPath: "duration")
-        
-        NotificationCenter.default.removeObserver(self)
-        
-        player?.pause()
-        player = nil
-        playerLayer = nil
+    }
+}
+
+extension MoviePlayerViewController: MoviePlayerViewControllerProtocol {
+    
+    func updatePlayPauseButton(isPlaying: Bool) {
+        let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .semibold)
+        let imageName = isPlaying ? "pause.fill" : "play.fill"
+        playPauseButton.setImage(UIImage(systemName: imageName, withConfiguration: config), for: .normal)
+    }
+    
+    func updateVolumeIcon(isMuted: Bool, volume: Float) {
+        let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .medium)
+        let imageName: String
+        if isMuted || volume == 0 {
+            imageName = "speaker.slash.fill"
+        } else if volume < 0.3 {
+            imageName = "speaker.1.fill"
+        } else if volume < 0.7 {
+            imageName = "speaker.2.fill"
+        } else {
+            imageName = "speaker.3.fill"
+        }
+        volumeButton.setImage(UIImage(systemName: imageName, withConfiguration: config), for: .normal)
+        volumeSlider.value = volume
+    }
+    
+    func updateProgress(currentTime: String, progress: Float) {
+        currentTimeLabel.text = currentTime
+        progressSlider.value = progress
+    }
+    
+    func updateTotalTime(_ totalTime: String) {
+        totalTimeLabel.text = totalTime
+    }
+    
+    func setupPlayerLayer(with player: AVPlayer) {
+        playerLayer?.removeFromSuperlayer()
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer?.videoGravity = .resizeAspect
+        if let playerLayer = playerLayer {
+            playerContainerView.layer.insertSublayer(playerLayer, at: 0)
+            playerLayer.frame = playerContainerView.bounds
+        }
+    }
+    
+    func showLoadingIndicator() {
+        loadingIndicator.startAnimating()
+    }
+    
+    func hideLoadingIndicator() {
+        loadingIndicator.stopAnimating()
+    }
+    
+    func showControls() {
+        UIView.animate(withDuration: 0.3) {
+            self.controlsContainerView.alpha = 1
+        }
+    }
+    
+    func hideControls() {
+        UIView.animate(withDuration: 0.3) {
+            self.controlsContainerView.alpha = 0
+        }
     }
 }
