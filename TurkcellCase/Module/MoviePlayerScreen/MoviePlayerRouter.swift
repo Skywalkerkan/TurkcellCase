@@ -31,6 +31,7 @@ final class MoviePlayerRouter {
 
 extension MoviePlayerRouter: MoviePlayerRouterProtocol {
     func navigateBack() {
-        viewController?.navigationController?.popViewController(animated: true)
+       // viewController?.navigationController?.popViewController(animated: true)
+        viewController?.dismiss(animated: true)
     }
 }

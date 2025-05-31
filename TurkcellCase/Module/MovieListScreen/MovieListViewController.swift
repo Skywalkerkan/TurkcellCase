@@ -148,7 +148,6 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let movies = presenter.getMoviesForSection(indexPath.section)
         
-        // Loading cell görüntülendiğinde pagination tetikle
         if indexPath.item == movies.count {
             presenter.loadMoreMoviesIfNeeded(for: indexPath.section)
         }

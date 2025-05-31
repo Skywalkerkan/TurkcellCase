@@ -49,7 +49,9 @@ extension MovieDetailRouter: MovieDetailRouterProtocol {
             /*playerVC.videoID = videoID
             viewController?.present(playerVC, animated: true, completion: nil)*/
             let playerVC = MoviePlayerRouter.createModule(movieURL: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", movie: movie)
-            viewController?.navigationController?.pushViewController(playerVC, animated: true)
+            playerVC.modalPresentationStyle = .fullScreen
+            viewController?.present(playerVC, animated: true)
+          //  viewController?.navigationController?.pushViewController(playerVC, animated: true)
         }
     }
 }
