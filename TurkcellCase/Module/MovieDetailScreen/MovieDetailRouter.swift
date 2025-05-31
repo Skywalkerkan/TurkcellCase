@@ -9,7 +9,7 @@ import UIKit
 
 enum MovieDetailRoutes {
     case castDetail(cast: Cast)
-    case playMovie(videoID: String)
+    case playMovie(movie: Movie?)
 }
 
 protocol MovieDetailRouterProtocol {
@@ -44,11 +44,11 @@ extension MovieDetailRouter: MovieDetailRouterProtocol {
             /*CastDetailVC.cast = cast*/
             viewController?.navigationController?.pushViewController(castDetailVC, animated: true)
             
-        case .playMovie(let videoID):
+        case .playMovie(let movie):
             //let playerVC = MoviePlayerViewController()
             /*playerVC.videoID = videoID
             viewController?.present(playerVC, animated: true, completion: nil)*/
-            let playerVC = MoviePlayerRouter.createModule(movieURL: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8")
+            let playerVC = MoviePlayerRouter.createModule(movieURL: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", movie: movie)
             viewController?.navigationController?.pushViewController(playerVC, animated: true)
         }
     }

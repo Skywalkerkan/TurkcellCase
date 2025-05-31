@@ -13,7 +13,7 @@ protocol MovieDetailPresenterProtocol {
     func getCastMember(at index: Int) -> Cast?
     func didSelectCast(_ cast: Cast)
     func fetchCredits(for movieID: Int)
-    func didSelectPlayMovie()
+    func didSelectPlayMovie(movie: Movie?)
 }
 
 final class MovieDetailPresenter {
@@ -56,8 +56,8 @@ extension MovieDetailPresenter: MovieDetailPresenterProtocol {
         print("🎭 Seçilen Oyuncu: \(cast.name ?? "-")")
     }
     
-    func didSelectPlayMovie(){
-        router.navigate(.playMovie(videoID: "3213"))
+    func didSelectPlayMovie(movie: Movie?){
+        router.navigate(.playMovie(movie: movie))
     }
 }
 

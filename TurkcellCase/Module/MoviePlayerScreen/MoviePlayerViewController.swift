@@ -176,11 +176,15 @@ final class MoviePlayerViewController: UIViewController {
     private var fullscreenConstraints: [NSLayoutConstraint] = []
     private var normalConstraints: [NSLayoutConstraint] = []
         
+    var movie: Movie?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         presenter.viewDidLoad()
         listeOrientation()
+        movieTitleLabel.text = movie?.title
+        movieDescriptionLabel.text = movie?.overview
     }
     
     override func viewDidLayoutSubviews() {
