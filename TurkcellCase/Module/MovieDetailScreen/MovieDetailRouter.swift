@@ -41,13 +41,14 @@ extension MovieDetailRouter: MovieDetailRouterProtocol {
         switch route {
         case .castDetail(let cast):
             let castDetailVC = MoviePlayerViewController()
-            /*castDetailVC.cast = cast
-            viewController?.navigationController?.pushViewController(castDetailVC, animated: true)*/
+            /*CastDetailVC.cast = cast*/
+            viewController?.navigationController?.pushViewController(castDetailVC, animated: true)
             
         case .playMovie(let videoID):
             let playerVC = MoviePlayerViewController()
             /*playerVC.videoID = videoID
             viewController?.present(playerVC, animated: true, completion: nil)*/
+            viewController?.navigationController?.pushViewController(playerVC, animated: true)
         }
     }
 }

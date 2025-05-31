@@ -537,6 +537,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     @objc private func playButtonTapped() {
+        presenter.didSelectPlayMovie()
         let alert = UIAlertController(title: "Film Oynatılıyor", message: "Film oynatma özelliği yakında eklenecek.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Tamam", style: .default))
         present(alert, animated: true)
