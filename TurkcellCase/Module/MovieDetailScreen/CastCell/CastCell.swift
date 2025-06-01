@@ -29,15 +29,6 @@ class CastCell: UICollectionViewCell {
         return label
     }()
     
-    private let roleLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.textColor = .secondaryLabel
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-        
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -50,7 +41,6 @@ class CastCell: UICollectionViewCell {
     private func setupUI() {
         contentView.addSubview(imageView)
         contentView.addSubview(nameLabel)
-        contentView.addSubview(roleLabel)
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
@@ -62,25 +52,11 @@ class CastCell: UICollectionViewCell {
             nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
             nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
             
-            /*roleLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 2),
-            roleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
-            roleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -4),
-            roleLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -4)*/
         ])
     }
     
-    // MARK: - Configure
-    
     func configure(_ cast: Cast) {
         nameLabel.text = cast.name ?? "Unknown"
-        
-        if let character = cast.character, !character.isEmpty {
-            roleLabel.text = character
-        } else if let department = cast.department?.rawValue {
-            roleLabel.text = department
-        } else {
-            roleLabel.text = "Unknown Role"
-        }
         
         if let profilePath = cast.profilePath {
             let imageUrl = "https://image.tmdb.org/t/p/w500\(profilePath)"

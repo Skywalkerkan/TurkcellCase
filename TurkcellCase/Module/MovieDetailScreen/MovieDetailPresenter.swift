@@ -39,7 +39,6 @@ extension MovieDetailPresenter: MovieDetailPresenterProtocol {
     func viewDidLoad(movie: Movie?) {
         view.setupCollectionView()
         self.movie = movie
-        print("girdi mi")
         view.updateMovieInfoUI(movie: movie)
         
     }

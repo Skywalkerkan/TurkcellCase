@@ -487,6 +487,7 @@ class MovieDetailViewController: BaseViewController {
 }
 
 extension MovieDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter.castCount
     }

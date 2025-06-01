@@ -82,18 +82,11 @@ extension MovieListPresenter: MovieListPresenterProtocol {
     
     func loadMoreMoviesIfNeeded(for section: Int) {
         guard section < sectionCategories.count else { return }
-        
         let category = sectionCategories[section]
-        
         guard isLoadingMore[category] != true else { return }
-        
         currentPages[category] = (currentPages[category] ?? 1) + 1
         let nextPage = currentPages[category] ?? 2
-        
         isLoadingMore[category] = true
-        
-        print("Loading more for \(category) - Page: \(nextPage)")
-        
         interactor.fetchMoreMovies(category: category, page: nextPage)
     }
 }
