@@ -83,17 +83,3 @@ extension Container {
         return self.resolve(MovieListViewController.self)!
     }
 }
-
-/*
-final class MovieListFactory {
-    
-    private let container: Container
-    
-    init(container: Container = AssemblyManager.shared.container) {
-        self.container = container
-    }
-    
-    func createMovieListViewController() -> MovieListViewController {
-        return container.getMovieListViewController()
-    }
-}*/

@@ -35,7 +35,6 @@ extension MovieListRouter: MovieListRouterProtocol {
             return
         }
         
-        print("burası")
         viewController?.showOverlayDetail(with: movie)
     }
 }

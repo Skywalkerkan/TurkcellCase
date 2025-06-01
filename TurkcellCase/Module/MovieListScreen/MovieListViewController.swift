@@ -65,8 +65,11 @@ final class MovieListViewController: BaseViewController {
     }()
     
     var presenter: MovieListPresenterProtocol!
+
+    //Bonus tablet için gerekli olan swinject factorysi
     var detailViewFactory: ((Movie) -> MovieDetailViewController?)?
 
+    //Tablet için gerekli atamalar
     private var overlayDetailViewController: UIViewController?
     private var overlayLeadingConstraint: NSLayoutConstraint?
 
@@ -78,9 +81,7 @@ final class MovieListViewController: BaseViewController {
     
     private func setupViews() {
         view.backgroundColor = .black
-        
         view.addSubview(collectionView)
-
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -89,23 +90,6 @@ final class MovieListViewController: BaseViewController {
         ])
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
-    
-    private func fetchMovies() async {
-        let result = await movieService.fetchMovies(category: .upcoming, page: 1)
-        
-        switch result {
-        case .success(let movieListResponse):
-            print(" \(movieListResponse)")
-            movieListResponse.results?.forEach { movie in
-                print("🎬 \(movie.title ?? "title yok")")
-            }
-        case .failure(let error):
-            print(" Hata: \(error.localizedDescription)")
-        }
-    }
 }
 
 
@@ -139,10 +123,8 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Film section\(indexPath.section), itemi \(indexPath.item)")
         let movies = presenter.getMoviesForSection(indexPath.section)
         let movie = movies[indexPath.item]
-        print(movie.backdropPath)
         presenter.didSelectMovie(movie)
     }
     
@@ -153,8 +135,6 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
             presenter.loadMoreMoviesIfNeeded(for: indexPath.section)
         }
     }
-    
-
     
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
@@ -213,6 +193,8 @@ extension MovieListViewController: MovieListViewControllerProtocol {
         }
     }
 
+    //Bonus Tablet ekranı için gerekli yerin sağlandığı yer
+    //Viewcontrollerda bir cell seçilince presenterla router navigateden direk bağlantı sağlayıp buradan direk yandan sayfa açılmasını sağlayan bir protocol
     func showOverlayDetail(with movie: Movie) {
         if let detailVC = overlayDetailViewController as? MovieDetailViewController {
             detailVC.movie = movie
@@ -220,7 +202,7 @@ extension MovieListViewController: MovieListViewControllerProtocol {
         }
         
         guard let detailVC = detailViewFactory?(movie) else {
-            assertionFailure("MovieDetailViewController resolve edilemedi!")
+            assertionFailure("MovieDetailViewController resolve edilmedi")
             return
         }
         
@@ -233,7 +215,9 @@ extension MovieListViewController: MovieListViewControllerProtocol {
         overlayDetailViewController = detailVC
         
         detailVC.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "Kapat",
+            image: UIImage(systemName: "chevron.backward")?
+                .withRenderingMode(.alwaysOriginal)
+                .withTintColor(.white),
             style: .plain,
             target: self,
             action: #selector(closeOverlay)
@@ -266,7 +250,7 @@ extension MovieListViewController: MovieListViewControllerProtocol {
         }
     }
 
-
+    //Tabletiçin detay ekranının kapandığı yer
     @objc private func closeOverlay() {
         guard let detailNav = overlayDetailViewController?.navigationController else { return }
 

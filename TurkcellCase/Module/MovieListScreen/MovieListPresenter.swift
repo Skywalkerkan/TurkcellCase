@@ -97,7 +97,6 @@ extension MovieListPresenter: MovieListInteractorOutputProtocol {
         self.moviesByCategory = movies
         view.reloadData()
         view.hideLoadingView()
-        print("kulalnılıyor mu")
     }
     
     func fetchMoreMoviesSuccess(category: MovieCategory, movies: [Movie]) {

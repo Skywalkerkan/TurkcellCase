@@ -63,7 +63,9 @@ class CastCell: UICollectionViewCell {
             ImageLoaderManager.shared.loadImage(
                 from: imageUrl,
                 into: imageView,
-                placeholder: UIImage(systemName: "person.fill")
+                placeholder: UIImage(systemName: "person.fill")?
+                    .withRenderingMode(.alwaysOriginal)
+                    .withTintColor(.systemGray4)
             )
         } else {
             imageView.image = UIImage(systemName: "person.fill")
