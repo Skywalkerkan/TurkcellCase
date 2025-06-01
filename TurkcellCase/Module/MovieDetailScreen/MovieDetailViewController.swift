@@ -223,10 +223,16 @@ class MovieDetailViewController: BaseViewController {
         }
 
         if let rating = movie.voteAverage {
-            ratingLabel.text = String(format: "%.1f", rating)
+            print(rating)
+            if rating == floor(rating) { // Tam sayı mı kontrolü
+                ratingLabel.text = String(format: "%.0f", rating)
+            } else {
+                ratingLabel.text = String(format: "%.1f", rating)
+            }
         } else {
             ratingLabel.text = "-"
         }
+
 
         if let genreIds = movie.genreIds {
             let genres = genreIds.compactMap { genreName(for: $0) }

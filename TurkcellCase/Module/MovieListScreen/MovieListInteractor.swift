@@ -35,25 +35,25 @@ extension MovieListInteractor: MovieListInteractorProtocol {
             var results: [MovieCategory: [Movie]] = [:]
             
             async let topRatedResult = movieService.fetchMovies(category: .topRated, page: 1)
-            async let upcomingResult = movieService.fetchMovies(category: .upcoming, page: 1)
-            async let nowPlayingResult = movieService.fetchMovies(category: .nowPlaying, page: 1)
+            async let upcomingResult = movieService.fetchMovies(category: .popularity, page: 1)
+            async let nowPlayingResult = movieService.fetchMovies(category: .revenue, page: 1)
             
             let (topRated, upcoming, nowPlaying) = await (topRatedResult, upcomingResult, nowPlayingResult)
             
             var errors: [NetworkError] = []
             
             switch topRated {
-            case .success(let response): results[.topRated] = response.results
+            case .success(let response): results[.popularity] = response.results
             case .failure(let error): errors.append(error)
             }
             
             switch upcoming {
-            case .success(let response): results[.upcoming] = response.results
+            case .success(let response): results[.topRated] = response.results
             case .failure(let error): errors.append(error)
             }
             
             switch nowPlaying {
-            case .success(let response): results[.nowPlaying] = response.results
+            case .success(let response): results[.revenue] = response.results
             case .failure(let error): errors.append(error)
             }
             

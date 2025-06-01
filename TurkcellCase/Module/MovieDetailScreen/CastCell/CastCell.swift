@@ -68,7 +68,9 @@ class CastCell: UICollectionViewCell {
                     .withTintColor(.systemGray4)
             )
         } else {
-            imageView.image = UIImage(systemName: "person.fill")
+            imageView.image = UIImage(systemName: "person.fill")?
+                .withRenderingMode(.alwaysOriginal)
+                .withTintColor(.systemGray4)
         }
     }
 }

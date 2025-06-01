@@ -27,7 +27,7 @@ final class MovieListPresenter {
     private let router: MovieListRouterProtocol
     unowned var view: MovieListViewControllerProtocol
     
-    private let sectionCategories: [MovieCategory] = [.topRated, .upcoming, .nowPlaying]
+    private let sectionCategories: [MovieCategory] = [.topRated, .popularity, .revenue]
     
     init(view: MovieListViewControllerProtocol,
          interactor: MovieListInteractorProtocol,
@@ -69,9 +69,9 @@ extension MovieListPresenter: MovieListPresenterProtocol {
     
     func getSectionTitle(for section: Int) -> String {
         switch section {
-        case 0: return "Top Rated"
-        case 1: return "Upcoming"
-        case 2: return "Now Playing"
+        case 0: return "Popular"
+        case 1: return "Top Rated"
+        case 2: return "Revenue"
         default: return ""
         }
     }

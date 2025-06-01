@@ -21,7 +21,7 @@ protocol MoviePlayerViewControllerProtocol: AnyObject {
     func hideControls()
 }
 
-final class MoviePlayerViewController: UIViewController {
+final class MoviePlayerViewController: BaseViewController {
     
     var presenter: MoviePlayerPresenterProtocol!
     private var playerLayer: AVPlayerLayer?
