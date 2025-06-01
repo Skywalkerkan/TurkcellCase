@@ -16,38 +16,32 @@ protocol MovieListRouterProtocol {
     func navigate(_ route: MovieRoutes)
 }
 
-final class MovieRouter {
+final class MovieListRouter {
     
     weak var viewController: MovieListViewController?
     private var detailViewController: MovieDetailViewController?
     private var isDetailVisible = false
     private var detailLeadingConstraint: NSLayoutConstraint?
-    
-    static func createModule() -> MovieListViewController {
-        let view = MovieListViewController()
-        let router = MovieRouter()
-        let interactor = MovieListInteractor()
-        let presenter = MovieListPresenter(view: view, interactor: interactor, router: router)
-        
-        view.presenter = presenter
-        interactor.output = presenter
-        router.viewController = view
-        
-        return view
-    }
+    var detailRouterFactory: ((Movie) -> MovieDetailViewController?)?
 }
 
-extension MovieRouter: MovieListRouterProtocol {
+extension MovieListRouter: MovieListRouterProtocol {
     
     func navigate(_ route: MovieRoutes) {
         guard case .detail(let movie) = route else { return }
         
         guard UIDevice.current.userInterfaceIdiom == .pad else {
-            let detailVC = MovieDetailRouter.createModule(with: movie)
-            viewController?.navigationController?.pushViewController(detailVC, animated: true)
+            // Swinject factory kullanımı
+            if let detailVC = detailRouterFactory?(movie) {
+                viewController?.navigationController?.pushViewController(detailVC, animated: true)
+            } else {
+                let detailVC = MovieDetailRouter.createModule(with: movie)
+                viewController?.navigationController?.pushViewController(detailVC, animated: true)
+            }
             return
         }
         
+        print("burası")
         viewController?.showOverlayDetail(with: movie)
     }
 }

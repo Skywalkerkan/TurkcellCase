@@ -10,8 +10,20 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        window = UIWindow(windowScene: windowScene)
+        
+        let movieListViewController = AssemblyManager.shared.container.getMovieListViewController()
+        let navigationController = UINavigationController(rootViewController: movieListViewController)
+        
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+    }
 
-    func scene(_ scene: UIScene,
+   /* func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
 
@@ -24,7 +36,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = nav       
         window.makeKeyAndVisible()
         self.window = window
-    }
+    }*/
 
 
     

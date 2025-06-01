@@ -26,7 +26,7 @@ final class MovieDetailPresenter {
     
     init(view: MovieDetailViewControllerProtocol,
          interactor: MovieDetailInteractorProtocol,
-         router: MovieDetailRouter) {
+         router: MovieDetailRouterProtocol) {
         self.view = view
         self.interactor = interactor
         self.router = router

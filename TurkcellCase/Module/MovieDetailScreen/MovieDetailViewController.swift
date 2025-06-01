@@ -211,6 +211,7 @@ class MovieDetailViewController: UIViewController {
     ]
     
     var presenter: MovieDetailPresenterProtocol!
+    private let gradientLayer = CAGradientLayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -227,6 +228,11 @@ class MovieDetailViewController: UIViewController {
             setupBackButton()
         }
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        gradientLayer.frame = backdropImageView.bounds
     }
     
     private func configureViews() {
@@ -334,10 +340,9 @@ class MovieDetailViewController: UIViewController {
         scrollView.addSubview(contentView)
         contentView.addSubview(backdropImageView)
         
-        let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [
             UIColor.clear.cgColor,
-            UIColor.systemBackground.withAlphaComponent(0.8).cgColor,
+            UIColor.systemBackground.withAlphaComponent(0.6).cgColor,
             UIColor.systemBackground.cgColor
         ]
         gradientLayer.locations = [0.0, 0.7, 1.0]

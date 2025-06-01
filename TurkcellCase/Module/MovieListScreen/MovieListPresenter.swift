@@ -29,7 +29,10 @@ final class MovieListPresenter {
     
     private let sectionCategories: [MovieCategory] = [.topRated, .upcoming, .nowPlaying]
     
-    init(view: MovieListViewControllerProtocol, interactor: MovieListInteractorProtocol, router: MovieListRouterProtocol) {
+    init(view: MovieListViewControllerProtocol,
+         interactor: MovieListInteractorProtocol,
+         router: MovieListRouterProtocol) {
+        
         self.view = view
         self.interactor = interactor
         self.router = router
@@ -38,8 +41,8 @@ final class MovieListPresenter {
             currentPages[category] = 1
             isLoadingMore[category] = false
         }
-    }
-}
+        
+    }}
 
 extension MovieListPresenter: MovieListPresenterProtocol {
     

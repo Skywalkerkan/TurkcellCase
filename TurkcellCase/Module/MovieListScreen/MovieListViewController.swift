@@ -65,7 +65,8 @@ final class MovieListViewController: BaseViewController {
     }()
     
     var presenter: MovieListPresenterProtocol!
-    
+    var detailViewFactory: ((Movie) -> MovieDetailViewController?)?
+
     private var overlayDetailViewController: UIViewController?
     private var overlayLeadingConstraint: NSLayoutConstraint?
 
@@ -211,36 +212,50 @@ extension MovieListViewController: MovieListViewControllerProtocol {
             detailVC.movie = movie
             return
         }
-
-        let detailVC = MovieDetailRouter.createModule(with: movie)
+        
+        guard let detailVC = detailViewFactory?(movie) else {
+            assertionFailure("MovieDetailViewController resolve edilemedi!")
+            return
+        }
+        
         let detailNav = UINavigationController(rootViewController: detailVC)
         detailNav.view.translatesAutoresizingMaskIntoConstraints = false
-
+        
         addChild(detailNav)
         view.addSubview(detailNav.view)
         detailNav.didMove(toParent: self)
-
         overlayDetailViewController = detailVC
-
-        let close = UIBarButtonItem(title: "Kapat", style: .plain, target: self, action: #selector(closeOverlay))
-        detailVC.navigationItem.leftBarButtonItem = close
-
+        
+        detailVC.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Kapat",
+            style: .plain,
+            target: self,
+            action: #selector(closeOverlay)
+        )
+        
         overlayLeadingConstraint = detailNav.view.leadingAnchor.constraint(equalTo: view.trailingAnchor)
-
+        
         NSLayoutConstraint.activate([
             detailNav.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             overlayLeadingConstraint!,
             detailNav.view.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.45),
             detailNav.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-
+        
         view.layoutIfNeeded()
-
+        
         overlayLeadingConstraint?.isActive = false
-        overlayLeadingConstraint = detailNav.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.bounds.width * 0.55)
+        overlayLeadingConstraint = detailNav.view.leadingAnchor.constraint(
+            equalTo: view.leadingAnchor,
+            constant: view.bounds.width * 0.55
+        )
         overlayLeadingConstraint?.isActive = true
-
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut) {
+        
+        UIView.animate(withDuration: 0.4,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0,
+                       options: .curveEaseInOut) {
             self.view.layoutIfNeeded()
         }
     }
