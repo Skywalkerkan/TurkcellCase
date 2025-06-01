@@ -42,7 +42,7 @@ final class MovieListAssembly: Assembly {
             )
             
             if let movieInteractor = interactor as? MovieListInteractor {
-                movieInteractor.output = presenter as? MovieListInteractorOutputProtocol
+                movieInteractor.output = presenter
             }
             
             return presenter

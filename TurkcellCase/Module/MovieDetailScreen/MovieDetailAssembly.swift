@@ -33,7 +33,7 @@ final class MovieDetailAssembly: Assembly {
             )
             
             if let interactor = interactor as? MovieDetailInteractor {
-                interactor.output = presenter as? MovieDetailInteractorOutputProtocol
+                interactor.output = presenter
             }
             
             return presenter

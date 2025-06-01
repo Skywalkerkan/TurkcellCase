@@ -31,7 +31,7 @@ final class MoviePlayerAssembly: Assembly {
                                                   interactor: interactor,
                                                   router: router)
             if let interactor = interactor as? MoviePlayerInteractor {
-                interactor.output = presenter as? MoviePlayerInteractorOutputProtocol
+                interactor.output = presenter
             }
             return presenter
         }

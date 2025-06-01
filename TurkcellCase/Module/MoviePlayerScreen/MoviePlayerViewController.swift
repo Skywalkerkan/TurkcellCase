@@ -14,6 +14,7 @@ protocol MoviePlayerViewControllerProtocol: AnyObject {
     func updateProgress(currentTime: String, progress: Float)
     func updateTotalTime(_ totalTime: String)
     func setupPlayerLayer(with player: AVPlayer)
+    func updateMovieInfo(title: String, description: String)
     func showLoadingIndicator()
     func hideLoadingIndicator()
     func showControls()
@@ -142,7 +143,7 @@ final class MoviePlayerViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textColor = .label
         label.numberOfLines = 0
-        label.text = movieTitle
+        label.text = "No title for this movie."
         return label
     }()
     
@@ -152,7 +153,7 @@ final class MoviePlayerViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.textColor = .secondaryLabel
         label.numberOfLines = 0
-        label.text = movieDescription
+        label.text = "There is no decription for this movie"
         label.lineBreakMode = .byWordWrapping
         return label
     }()
@@ -166,11 +167,7 @@ final class MoviePlayerViewController: UIViewController {
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
-        
-    var movieTitle: String = "Örnek Dizi"
-    var movieDescription: String = "Örnek film açıklamasııııı "
-    var movieURL: String = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
-        
+                
     private var playerHeightConstraint: NSLayoutConstraint!
     private var contentViewBottomConstraint: NSLayoutConstraint!
     private var fullscreenConstraints: [NSLayoutConstraint] = []
@@ -181,10 +178,8 @@ final class MoviePlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        presenter.viewDidLoad()
-        listeOrientation()
-        movieTitleLabel.text = movie?.title
-        movieDescriptionLabel.text = movie?.overview
+        presenter.viewDidLoad(movie: movie)
+        listenOrientation()
     }
     
     override func viewDidLayoutSubviews() {
@@ -192,7 +187,7 @@ final class MoviePlayerViewController: UIViewController {
         playerLayer?.frame = playerContainerView.bounds
     }
     
-    private func listeOrientation(){
+    private func listenOrientation(){
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(deviceOrientationDidChange),
@@ -516,6 +511,11 @@ final class MoviePlayerViewController: UIViewController {
 }
 
 extension MoviePlayerViewController: MoviePlayerViewControllerProtocol {
+    
+    func updateMovieInfo(title: String, description: String) {
+        movieTitleLabel.text = title
+        movieDescriptionLabel.text = description
+    }
     
     func updatePlayPauseButton(isPlaying: Bool) {
         let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .semibold)

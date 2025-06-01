@@ -9,7 +9,7 @@ import Foundation
 import AVFoundation
 
 protocol MoviePlayerPresenterProtocol {
-    func viewDidLoad()
+    func viewDidLoad(movie: Movie?)
     func playPauseTapped()
     func volumeButtonTapped()
     func volumeSliderChanged(to value: Float)
@@ -26,9 +26,9 @@ final class MoviePlayerPresenter {
     private let interactor: MoviePlayerInteractorProtocol
     private let router: MoviePlayerRouterProtocol
     
+    private var movie: Movie?
     private var isPlaying = false
     private var isMuted = false
-    private var isFullscreen = false
     
     init(view: MoviePlayerViewControllerProtocol,
          interactor: MoviePlayerInteractorProtocol,
@@ -41,7 +41,12 @@ final class MoviePlayerPresenter {
 
 extension MoviePlayerPresenter: MoviePlayerPresenterProtocol {
     
-    func viewDidLoad() {
+    func viewDidLoad(movie: Movie?) {
+        self.movie = movie
+        let title = movie?.title ?? "No title for this movie."
+        let description = movie?.overview ?? "There is no description for this movie"
+        view.updateMovieInfo(title: title, description: description)
+        
         view.showLoadingIndicator()
         interactor.setupPlayer()
     }
