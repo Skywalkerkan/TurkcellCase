@@ -8,7 +8,6 @@
 import UIKit
 
 enum MovieDetailRoutes {
-    case castDetail(cast: Cast)
     case playMovie(movie: Movie?)
 }
 
@@ -26,11 +25,6 @@ extension MovieDetailRouter: MovieDetailRouterProtocol {
     
     func navigate(_ route: MovieDetailRoutes) {
         switch route {
-        case .castDetail(let cast):
-            let castDetailVC = MoviePlayerViewController()
-            /*CastDetailVC.cast = cast*/
-            viewController?.navigationController?.pushViewController(castDetailVC, animated: true)
-            
         case .playMovie(let movie):
             let playerVC = AssemblyManager.shared.container.resolve(
                 MoviePlayerViewController.self,

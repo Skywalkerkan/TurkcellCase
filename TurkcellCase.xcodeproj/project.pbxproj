@@ -179,11 +179,19 @@
 			path = DI;
 			sourceTree = "<group>";
 		};
+		DE9CEC742DECE99300507F01 /* CastCell */ = {
+			isa = PBXGroup;
+			children = (
+				DE9D7D752DE78B6800CC1806 /* CastCell.swift */,
+			);
+			path = CastCell;
+			sourceTree = "<group>";
+		};
 		DE9D7D722DE7709A00CC1806 /* MovieDetailScreen */ = {
 			isa = PBXGroup;
 			children = (
+				DE9CEC742DECE99300507F01 /* CastCell */,
 				DE9D7D732DE770BC00CC1806 /* MovieDetailViewController.swift */,
-				DE9D7D752DE78B6800CC1806 /* CastCell.swift */,
 				DE5FF9842DE8E26300D35C8B /* MovieDetailPresenter.swift */,
 				DE5FF9862DE8E27500D35C8B /* MovieDetailInteractor.swift */,
 				DE5FF9882DE8E28000D35C8B /* MovieDetailRouter.swift */,

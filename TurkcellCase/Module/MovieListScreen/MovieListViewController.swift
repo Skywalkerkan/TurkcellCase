@@ -202,7 +202,6 @@ extension MovieListViewController: MovieListViewControllerProtocol {
     }
     
     func showLoadingView() {
-        print("girdi")
         DispatchQueue.main.async {
             self.showLoading()
         }

@@ -46,9 +46,7 @@ class CastCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Setup
-    
+        
     private func setupUI() {
         contentView.addSubview(imageView)
         contentView.addSubview(nameLabel)
@@ -74,14 +72,14 @@ class CastCell: UICollectionViewCell {
     // MARK: - Configure
     
     func configure(_ cast: Cast) {
-        nameLabel.text = cast.name ?? "Bilinmiyor"
+        nameLabel.text = cast.name ?? "Unknown"
         
         if let character = cast.character, !character.isEmpty {
             roleLabel.text = character
         } else if let department = cast.department?.rawValue {
             roleLabel.text = department
         } else {
-            roleLabel.text = "Rol Bilinmiyor"
+            roleLabel.text = "Unknown Role"
         }
         
         if let profilePath = cast.profilePath {

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MovieDetailPresenterProtocol {
-    func viewDidLoad()
+    func viewDidLoad(movie: Movie?)
     var castCount: Int { get }
     func getCastMember(at index: Int) -> Cast?
     func didSelectCast(_ cast: Cast)
@@ -19,7 +19,8 @@ protocol MovieDetailPresenterProtocol {
 final class MovieDetailPresenter {
     
     private var cast: [Cast] = []
-    
+    private var movie: Movie?
+
     private let interactor: MovieDetailInteractorProtocol
     private let router: MovieDetailRouterProtocol
     unowned var view: MovieDetailViewControllerProtocol
@@ -35,8 +36,12 @@ final class MovieDetailPresenter {
 
 extension MovieDetailPresenter: MovieDetailPresenterProtocol {
     
-    func viewDidLoad() {
+    func viewDidLoad(movie: Movie?) {
         view.setupCollectionView()
+        self.movie = movie
+        print("girdi mi")
+        view.updateMovieInfoUI(movie: movie)
+        
     }
     
     func fetchCredits(for movieID: Int) {

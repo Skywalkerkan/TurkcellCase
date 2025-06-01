@@ -17,15 +17,15 @@ enum NetworkError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "Geçersiz URL"
+            return "Unknown URL"
         case .requestFailed(let code, let message):
-            return "İstek başarısız (\(code)): \(message ?? "Bilinmeyen hata")"
+            return "Failed Request (\(code)): \(message ?? "Unknown Error")"
         case .decodingFailed(let error):
-            return "Decoding hatası: \(error.localizedDescription)"
+            return "Decoded Error: \(error.localizedDescription)"
         case .unknown(let error):
-            return "Bilinmeyen hata: \(error.localizedDescription)"
+            return "Unknown Error: \(error.localizedDescription)"
         case .noData:
-            return "Veri bulunamadı."
+            return "No Data."
         }
     }
 }

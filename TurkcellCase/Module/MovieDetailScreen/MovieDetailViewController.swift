@@ -8,6 +8,7 @@
 import UIKit
 
 protocol MovieDetailViewControllerProtocol: AnyObject {
+    func updateMovieInfoUI(movie: Movie?)
     func reloadData()
     func setupCollectionView()
     func hideLoadingView()
@@ -15,7 +16,7 @@ protocol MovieDetailViewControllerProtocol: AnyObject {
     func showError(_ error: String)
 }
 
-class MovieDetailViewController: UIViewController {
+class MovieDetailViewController: BaseViewController {
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -122,13 +123,6 @@ class MovieDetailViewController: UIViewController {
         return label
     }()
 
-    private let durationLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .secondaryLabel
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
 
     private let overviewTitleLabel: UILabel = {
         let label = UILabel()
@@ -151,7 +145,7 @@ class MovieDetailViewController: UIViewController {
 
     private let castTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Oyuncular"
+        label.text = "Actors"
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -192,29 +186,13 @@ class MovieDetailViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
-   /* var movie: Movie? {
-        didSet {
-            updateUI()
-        }
-    }*/
     
     var movie: Movie? {
         didSet { guard isViewLoaded else { return };
-            print(movie?.title)
             configureViews()
             presenter.fetchCredits(for: movie?.id ?? 0)
         }
     }
-
-
-    private let castMembers = [
-        ("Leonardo DiCaprio", "Actor", "https://example.com/leo.jpg"),
-        ("Kate Winslet", "Actress", "https://example.com/kate.jpg"),
-        ("James Cameron", "Director", "https://example.com/james.jpg"),
-        ("Celine Dion", "Singer", "https://example.com/celine.jpg"),
-        ("Celine Dion", "Singer", "https://example.com/celine.jpg")
-    ]
     
     var presenter: MovieDetailPresenterProtocol!
     private let gradientLayer = CAGradientLayer()
@@ -223,15 +201,9 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupConstraints()
-        registerCollectionViewCells()
+        presenter.viewDidLoad(movie: movie)
         if let movieId = movie?.id {
             presenter.fetchCredits(for: movieId)
-        }
-        configureViews()
-        
-        if UIDevice.current.userInterfaceIdiom == .pad,
-           let split = splitViewController as? UISplitViewController {
-            setupBackButton()
         }
     }
     
@@ -242,13 +214,12 @@ class MovieDetailViewController: UIViewController {
     
     private func configureViews() {
         guard let movie = movie else { return }
-
-        titleLabel.text = movie.title ?? "Bilinmeyen Başlık"
+        titleLabel.text = movie.title ?? "Unknown Title"
 
         if let releaseDate = movie.releaseDate, let year = releaseDate.split(separator: "-").first {
             yearLabel.text = String(year)
         } else {
-            yearLabel.text = "Yıl Bilinmiyor"
+            yearLabel.text = "Unknown Year"
         }
 
         if let rating = movie.voteAverage {
@@ -261,10 +232,8 @@ class MovieDetailViewController: UIViewController {
             let genres = genreIds.compactMap { genreName(for: $0) }
             genreLabel.text = genres.joined(separator: " • ")
         } else {
-            genreLabel.text = "Tür bilgisi yok"
+            genreLabel.text = "There is no info about type"
         }
-
-        durationLabel.text = "2 saat 28 dk"
 
         overviewLabel.text = movie.overview ?? "Açıklama bulunmuyor."
 
@@ -277,60 +246,31 @@ class MovieDetailViewController: UIViewController {
             let url = "https://image.tmdb.org/t/p/w500\(posterPath)"
             ImageLoaderManager.shared.loadImage(from: url, into: posterImageView, placeholder: UIImage(named: "placeholder"))
         }
-
     }
 
     private func genreName(for id: Int) -> String? {
         let genres: [Int: String] = [
-            28: "Aksiyon",
-            12: "Macera",
-            16: "Animasyon",
-            35: "Komedi",
-            80: "Suç",
-            99: "Belgesel",
-            18: "Dram",
-            10751: "Aile",
-            14: "Fantastik",
-            36: "Tarih",
-            27: "Korku",
-            10402: "Müzik",
-            9648: "Gizem",
-            10749: "Romantik",
-            878: "Bilim Kurgu",
-            10770: "TV Filmi",
-            53: "Gerilim",
-            10752: "Savaş",
+            28: "Action",
+            12: "Adventure",
+            16: "Animation",
+            35: "Comedy",
+            80: "Crime",
+            99: "Documentary",
+            18: "Drama",
+            10751: "Family",
+            14: "Fantasy",
+            36: "History",
+            27: "Horror",
+            10402: "Music",
+            9648: "Mystery",
+            10749: "Romance",
+            878: "Science Fiction",
+            10770: "TV Movie",
+            53: "Thriller",
+            10752: "War",
             37: "Western"
         ]
         return genres[id]
-    }
-
-    
-    private func setupBackButton() {
-        let backButton = UIBarButtonItem(
-            image: UIImage(systemName: "chevron.left"),
-            style: .plain,
-            target: self,
-            action: #selector(backButtonTapped)
-        )
-        navigationItem.leftBarButtonItem = backButton
-    }
-    
-    @objc private func backButtonTapped() {
-        guard let split = splitViewController as? UISplitViewController,
-              let window = view.window else { return }
-        
-        guard let primaryNav = split.viewController(for: .primary) as? UINavigationController,
-              let listVC = primaryNav.viewControllers.first else { return }
-        
-        let singleNav = UINavigationController(rootViewController: listVC)
-        
-        UIView.transition(with: window, duration: 0.35, options: [.curveEaseInOut], animations: {
-            self.view.transform = CGAffineTransform(translationX: window.bounds.width, y: 0)
-        }) { _ in
-            window.rootViewController = singleNav
-            self.view.transform = .identity
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -364,20 +304,12 @@ class MovieDetailViewController: UIViewController {
 
         contentView.addSubview(genreLabel)
         
-        contentView.addSubview(durationLabel)
-
         contentView.addSubview(overviewTitleLabel)
-        
 
         contentView.addSubview(overviewLabel)
         
         contentView.addSubview(castTitleLabel)
-        
-        castCollectionView.translatesAutoresizingMaskIntoConstraints = false
-        castCollectionView.backgroundColor = UIColor.clear
-        castCollectionView.showsHorizontalScrollIndicator = false
-        castCollectionView.dataSource = self
-        castCollectionView.delegate = self
+
         contentView.addSubview(castCollectionView)
         
         setupActionButtons()
@@ -418,7 +350,6 @@ class MovieDetailViewController: UIViewController {
     }
     
     private func setupActionButtons() {
-        // Favorite Button
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
         favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
         favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .selected)
@@ -428,7 +359,6 @@ class MovieDetailViewController: UIViewController {
         favoriteButton.addTarget(self, action: #selector(favoriteButtonTapped), for: .touchUpInside)
         contentView.addSubview(favoriteButton)
         
-        // Share Button
         shareButton.translatesAutoresizingMaskIntoConstraints = false
         shareButton.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
         shareButton.tintColor = UIColor.systemBlue
@@ -470,7 +400,7 @@ class MovieDetailViewController: UIViewController {
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            yearLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            yearLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12),
             yearLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             
             ratingView.centerYAnchor.constraint(equalTo: yearLabel.centerYAnchor),
@@ -501,10 +431,9 @@ class MovieDetailViewController: UIViewController {
             genreLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             genreLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             
-            durationLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 4),
-            durationLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+
             
-            overviewTitleLabel.topAnchor.constraint(equalTo: durationLabel.bottomAnchor, constant: 24),
+            overviewTitleLabel.topAnchor.constraint(equalTo: genreLabel.bottomAnchor, constant: 24),
             overviewTitleLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             
             overviewLabel.topAnchor.constraint(equalTo: overviewTitleLabel.bottomAnchor, constant: 8),
@@ -528,44 +457,23 @@ class MovieDetailViewController: UIViewController {
         }
     }
     
-
-    
-    private func registerCollectionViewCells() {
-        castCollectionView.register(CastCell.self, forCellWithReuseIdentifier: "CastCell")
-    }
-    
-    private func updateUI() {
-        guard let movie = movie else { return }
-        
-        titleLabel.text = movie.title
-        yearLabel.text = "2024" 
-        ratingLabel.text = String(format: "%.1f", movie.voteAverage ?? 5.0)
-        genreLabel.text = "Aksiyon, Dram, Romantik"
-        durationLabel.text = "194 dakika"
-        overviewLabel.text = movie.overview
-        
-    }
-    
     @objc private func playButtonTapped() {
         presenter.didSelectPlayMovie(movie: movie)
-        let alert = UIAlertController(title: "Film Oynatılıyor", message: "Film oynatma özelliği yakında eklenecek.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Tamam", style: .default))
-        present(alert, animated: true)
     }
     
     @objc private func favoriteButtonTapped() {
         favoriteButton.isSelected.toggle()
-        let message = favoriteButton.isSelected ? "Favorilere eklendi" : "Favorilerden çıkarıldı"
+        let message = favoriteButton.isSelected ? "Added to favorites" : "Removed from favorites"
         
         let alert = UIAlertController(title: message, message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Tamam", style: .default))
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
         present(alert, animated: true)
     }
     
     @objc private func shareButtonTapped() {
         guard let movie = movie else { return }
         
-        let textToShare = "Bu filmi izle: \(movie.title)"
+        let textToShare = "Watch This Movie: \(String(describing: movie.title))"
         let activityViewController = UIActivityViewController(activityItems: [textToShare], applicationActivities: nil)
         
         if let popover = activityViewController.popoverPresentationController {
@@ -593,27 +501,39 @@ extension MovieDetailViewController: UICollectionViewDataSource, UICollectionVie
 }
 
 extension MovieDetailViewController: MovieDetailViewControllerProtocol {
+    
+    func updateMovieInfoUI(movie: Movie?) {
+        configureViews()
+    }
+    
     func setupCollectionView() {
-        
+        castCollectionView.delegate = self
+        castCollectionView.dataSource = self
+        castCollectionView.register(CastCell.self, forCellWithReuseIdentifier: "CastCell")
     }
     
     func reloadData() {
-        print("reloadlandı")
         DispatchQueue.main.async {
             self.castCollectionView.reloadData()
         }
     }
     
     func hideLoadingView() {
-        
+        DispatchQueue.main.async {
+            self.hideLoading()
+        }
     }
     
     func showLoadingView() {
-        
+        DispatchQueue.main.async {
+            self.showLoading()
+        }
     }
     
     func showError(_ error: String) {
-        
+        DispatchQueue.main.async {
+            self.showAlert(with: "Alert", message: error)
+        }
     }
     
 }
