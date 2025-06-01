@@ -20,6 +20,7 @@
 		DE9CEC6A2DEC4EE400507F01 /* MovieListAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9CEC692DEC4EE300507F01 /* MovieListAssembly.swift */; };
 		DE9CEC6D2DEC5FE100507F01 /* AssemblyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9CEC6C2DEC5FE100507F01 /* AssemblyManager.swift */; };
 		DE9CEC712DEC68BB00507F01 /* MovieDetailAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9CEC702DEC68BB00507F01 /* MovieDetailAssembly.swift */; };
+		DE9CEC732DEC77C200507F01 /* MoviePlayerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9CEC722DEC77C200507F01 /* MoviePlayerAssembly.swift */; };
 		DE9D7D712DE76A6F00CC1806 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9D7D702DE76A6F00CC1806 /* LoadingCell.swift */; };
 		DE9D7D742DE770BC00CC1806 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9D7D732DE770BC00CC1806 /* MovieDetailViewController.swift */; };
 		DE9D7D762DE78B6800CC1806 /* CastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9D7D752DE78B6800CC1806 /* CastCell.swift */; };
@@ -79,6 +80,7 @@
 		DE9CEC692DEC4EE300507F01 /* MovieListAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListAssembly.swift; sourceTree = "<group>"; };
 		DE9CEC6C2DEC5FE100507F01 /* AssemblyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyManager.swift; sourceTree = "<group>"; };
 		DE9CEC702DEC68BB00507F01 /* MovieDetailAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailAssembly.swift; sourceTree = "<group>"; };
+		DE9CEC722DEC77C200507F01 /* MoviePlayerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviePlayerAssembly.swift; sourceTree = "<group>"; };
 		DE9D7D702DE76A6F00CC1806 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		DE9D7D732DE770BC00CC1806 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		DE9D7D752DE78B6800CC1806 /* CastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCell.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				DEA3E0B02DEADD21006FA91E /* MoviePlayerInteractor.swift */,
 				DEA3E0B22DEADD2A006FA91E /* MoviePlayerPresenter.swift */,
 				DEA3E0B42DEADD38006FA91E /* MoviePlayerRouter.swift */,
+				DE9CEC722DEC77C200507F01 /* MoviePlayerAssembly.swift */,
 			);
 			path = MoviePlayerScreen;
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				DEA3E0B32DEADD2A006FA91E /* MoviePlayerPresenter.swift in Sources */,
 				DE9CEC6D2DEC5FE100507F01 /* AssemblyManager.swift in Sources */,
 				DE5FF98B2DE8E6D300D35C8B /* ImageLoaderManager.swift in Sources */,
+				DE9CEC732DEC77C200507F01 /* MoviePlayerAssembly.swift in Sources */,
 				DEE1BB9C2DE50A4A004DF131 /* NetworkService.swift in Sources */,
 				DE9CEC712DEC68BB00507F01 /* MovieDetailAssembly.swift in Sources */,
 				DE9CEC6A2DEC4EE400507F01 /* MovieListAssembly.swift in Sources */,

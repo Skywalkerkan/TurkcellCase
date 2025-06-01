@@ -233,7 +233,6 @@ class MovieDetailViewController: UIViewController {
            let split = splitViewController as? UISplitViewController {
             setupBackButton()
         }
-        
     }
     
     override func viewDidLayoutSubviews() {

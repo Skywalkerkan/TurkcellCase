@@ -19,10 +19,8 @@ protocol MovieListRouterProtocol {
 final class MovieListRouter {
     
     weak var viewController: MovieListViewController?
-    private var detailViewController: MovieDetailViewController?
-    private var isDetailVisible = false
-    private var detailLeadingConstraint: NSLayoutConstraint?
     var detailRouterFactory: ((Movie) -> MovieDetailViewController?)?
+    
 }
 
 extension MovieListRouter: MovieListRouterProtocol {
@@ -31,11 +29,7 @@ extension MovieListRouter: MovieListRouterProtocol {
         guard case .detail(let movie) = route else { return }
         
         guard UIDevice.current.userInterfaceIdiom == .pad else {
-            // Swinject factory kullanımı
             if let detailVC = detailRouterFactory?(movie) {
-                viewController?.navigationController?.pushViewController(detailVC, animated: true)
-            } else {
-                let detailVC = MovieDetailRouter.createModule(with: movie)
                 viewController?.navigationController?.pushViewController(detailVC, animated: true)
             }
             return

@@ -15,7 +15,8 @@ final class AssemblyManager {
     private init() {
         assembler = Assembler([
             MovieListAssembly(),
-            MovieDetailAssembly()
+            MovieDetailAssembly(),
+            MoviePlayerAssembly()
         ])
     }
     

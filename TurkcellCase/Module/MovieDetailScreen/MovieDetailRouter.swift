@@ -20,19 +20,6 @@ final class MovieDetailRouter {
     
     weak var viewController: MovieDetailViewController?
     
-    static func createModule(with movie: Movie) -> MovieDetailViewController {
-        let view = MovieDetailViewController()
-        let router = MovieDetailRouter()
-        let interactor = MovieDetailInteractor()
-        let presenter = MovieDetailPresenter(view: view, interactor: interactor, router: router)
-        
-        view.presenter = presenter
-        view.movie = movie
-        interactor.output = presenter
-        router.viewController = view
-        
-        return view
-    }
 }
 
 extension MovieDetailRouter: MovieDetailRouterProtocol {
@@ -45,13 +32,13 @@ extension MovieDetailRouter: MovieDetailRouterProtocol {
             viewController?.navigationController?.pushViewController(castDetailVC, animated: true)
             
         case .playMovie(let movie):
-            //let playerVC = MoviePlayerViewController()
-            /*playerVC.videoID = videoID
-            viewController?.present(playerVC, animated: true, completion: nil)*/
-            let playerVC = MoviePlayerRouter.createModule(movieURL: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", movie: movie)
+            let playerVC = AssemblyManager.shared.container.resolve(
+                MoviePlayerViewController.self,
+                arguments: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+                movie
+            )!
             playerVC.modalPresentationStyle = .fullScreen
             viewController?.present(playerVC, animated: true)
-          //  viewController?.navigationController?.pushViewController(playerVC, animated: true)
         }
     }
 }
