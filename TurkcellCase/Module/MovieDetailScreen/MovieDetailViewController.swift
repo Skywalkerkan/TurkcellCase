@@ -199,9 +199,15 @@ class MovieDetailViewController: UIViewController {
         }
     }*/
     
-    var movie: Movie?
+    var movie: Movie? {
+        didSet { guard isViewLoaded else { return };
+            print(movie?.title)
+            configureViews()
+            presenter.fetchCredits(for: movie?.id ?? 0)
+        }
+    }
 
-    
+
     private let castMembers = [
         ("Leonardo DiCaprio", "Actor", "https://example.com/leo.jpg"),
         ("Kate Winslet", "Actress", "https://example.com/kate.jpg"),
