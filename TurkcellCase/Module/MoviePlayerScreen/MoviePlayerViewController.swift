@@ -338,6 +338,7 @@ final class MoviePlayerViewController: BaseViewController {
     
     private func setupGestures() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playerTapped))
+        //Ekrana tıklanma gestureı kontrolcüyü açıp kapama yeri
         playerContainerView.addGestureRecognizer(tapGesture)
     }
         
@@ -346,6 +347,7 @@ final class MoviePlayerViewController: BaseViewController {
     }
     
     @objc private func fullscreenButtonTapped() {
+        //Ekran full ekransa ekrandan çıkma yatay hizadan düz hizaya geçme ya da tam tersi
         if isFullscreen {
             exitFullscreen()
         } else {

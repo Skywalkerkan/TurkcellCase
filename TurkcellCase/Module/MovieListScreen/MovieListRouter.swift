@@ -29,12 +29,13 @@ extension MovieListRouter: MovieListRouterProtocol {
         guard case .detail(let movie) = route else { return }
         
         guard UIDevice.current.userInterfaceIdiom == .pad else {
+            //Telefonlar için
             if let detailVC = detailRouterFactory?(movie) {
                 viewController?.navigationController?.pushViewController(detailVC, animated: true)
             }
             return
         }
-        
+        //Tablet için gerekli yandan gelen view
         viewController?.showOverlayDetail(with: movie)
     }
 }

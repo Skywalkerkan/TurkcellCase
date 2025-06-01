@@ -231,8 +231,6 @@
 				DEE1BB772DE4D9DF004DF131 /* Entities */,
 				DEE1BB762DE4D9DA004DF131 /* Network */,
 				DEE1BB752DE4D9D4004DF131 /* Extensions */,
-				DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */,
-				DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */,
 				DEE1BB4E2DE4D960004DF131 /* Assets.xcassets */,
 				DEE1BB502DE4D960004DF131 /* LaunchScreen.storyboard */,
 				DEE1BB532DE4D960004DF131 /* Info.plist */,
@@ -308,6 +306,8 @@
 		DEE1BB7A2DE4DA06004DF131 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				DEE1BB422DE4D95F004DF131 /* AppDelegate.swift */,
+				DEE1BB442DE4D95F004DF131 /* SceneDelegate.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";

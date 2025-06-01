@@ -47,6 +47,7 @@ extension MoviePlayerPresenter: MoviePlayerPresenterProtocol {
         let description = movie?.overview ?? "There is no description for this movie"
         view.updateMovieInfo(title: title, description: description)
         
+        // loading indicatorunu aç ve oynatıcıyı hazırlama yeri
         view.showLoadingIndicator()
         interactor.setupPlayer()
     }
@@ -65,6 +66,7 @@ extension MoviePlayerPresenter: MoviePlayerPresenterProtocol {
         }
     }
     
+    // Ses kıs/aç butonu
     func volumeButtonTapped() {
         isMuted.toggle()
         interactor.setMuted(isMuted)
@@ -92,6 +94,8 @@ extension MoviePlayerPresenter: MoviePlayerPresenterProtocol {
         }
     }
     
+    // Oynatıcı yüzeyine dokunmada kontrolleri göster/gizlemeyeri
+    //3 saniyede içinde kontrolün kapatılması eğer oynatılıyorsa
     func playerTapped() {
         if isPlaying {
             view.showControls()

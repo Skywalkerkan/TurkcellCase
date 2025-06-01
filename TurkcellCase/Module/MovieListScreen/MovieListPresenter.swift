@@ -47,6 +47,7 @@ final class MovieListPresenter {
 extension MovieListPresenter: MovieListPresenterProtocol {
     
     func viewDidLoad() {
+        //loading viewin aktif edilmesi ve bütün movilerin çekilmesi
         view.showLoadingView()
         view.setupCollectionView()
         interactor.fetchAllMovies()

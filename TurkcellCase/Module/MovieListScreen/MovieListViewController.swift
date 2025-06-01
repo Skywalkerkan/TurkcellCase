@@ -76,6 +76,7 @@ final class MovieListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        //presenterla bağlantının sağlanması
         presenter.viewDidLoad()
     }
     
@@ -170,6 +171,7 @@ extension MovieListViewController: MovieListViewControllerProtocol {
     }
     
     func reloadData() {
+        //Movilerin gelmesi halinde ekranın güncellenmesi
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }

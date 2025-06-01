@@ -224,7 +224,7 @@ class MovieDetailViewController: BaseViewController {
 
         if let rating = movie.voteAverage {
             print(rating)
-            if rating == floor(rating) { // Tam sayı mı kontrolü
+            if rating == floor(rating) {
                 ratingLabel.text = String(format: "%.0f", rating)
             } else {
                 ratingLabel.text = String(format: "%.1f", rating)

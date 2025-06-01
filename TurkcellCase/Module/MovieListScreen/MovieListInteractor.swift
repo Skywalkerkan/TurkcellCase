@@ -32,41 +32,48 @@ extension MovieListInteractor: MovieListInteractorProtocol {
     
     func fetchAllMovies() {
         Task {
+            //Her bir kategoriye göre filmlerin çekilip sectionlara ayrılması
             var results: [MovieCategory: [Movie]] = [:]
-            
+
             async let topRatedResult = movieService.fetchMovies(category: .topRated, page: 1)
-            async let upcomingResult = movieService.fetchMovies(category: .popularity, page: 1)
-            async let nowPlayingResult = movieService.fetchMovies(category: .revenue, page: 1)
+            async let popularResult = movieService.fetchMovies(category: .popularity, page: 1)
+            async let revenueResult = movieService.fetchMovies(category: .revenue, page: 1)
             
-            let (topRated, upcoming, nowPlaying) = await (topRatedResult, upcomingResult, nowPlayingResult)
+            let (topRated, popularity, revenue) = await (topRatedResult, popularResult, revenueResult)
             
             var errors: [NetworkError] = []
             
             switch topRated {
-            case .success(let response): results[.popularity] = response.results
-            case .failure(let error): errors.append(error)
+            case .success(let response): 
+                results[.topRated] = response.results
+            case .failure(let error): 
+                errors.append(error)
             }
             
-            switch upcoming {
-            case .success(let response): results[.topRated] = response.results
-            case .failure(let error): errors.append(error)
+            switch popularity {
+            case .success(let response): 
+                results[.popularity] = response.results
+            case .failure(let error): 
+                errors.append(error)
             }
             
-            switch nowPlaying {
-            case .success(let response): results[.revenue] = response.results
-            case .failure(let error): errors.append(error)
+            switch revenue {
+            case .success(let response): 
+                results[.revenue] = response.results
+            case .failure(let error):
+                errors.append(error)
             }
             
-            DispatchQueue.main.async { [weak self] in
-                if let error = errors.first {
-                    self?.output?.fetchMoviesFailure(error)
-                } else {
-                    self?.output?.fetchAllMovieListsSuccess(results)
-                }
+            if let error = errors.first {
+                self.output?.fetchMoviesFailure(error)
+            } else {
+                self.output?.fetchAllMovieListsSuccess(results)
             }
+            
         }
     }
     
+    //20den fazla film çekileceğinde kullanılan method
     func fetchMoreMovies(category: MovieCategory, page: Int) {
         Task {
             let result = await movieService.fetchMovies(category: category, page: page)

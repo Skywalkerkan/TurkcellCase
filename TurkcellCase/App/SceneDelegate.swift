@@ -16,29 +16,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
+        //  DI konteynerinden MovieListViewControllerın alınması ve
+        //    View, Presenter, Interactor ve Router bileşenlerini enjekte etme yeri
         let movieListViewController = AssemblyManager.shared.container.getMovieListViewController()
         let navigationController = UINavigationController(rootViewController: movieListViewController)
         
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
-
-   /* func scene(_ scene: UIScene,
-               willConnectTo session: UISceneSession,
-               options connectionOptions: UIScene.ConnectionOptions) {
-
-        guard let windowScene = scene as? UIWindowScene else { return }
-        let window = UIWindow(windowScene: windowScene)
-
-        let listVC = MovieRouter.createModule()
-        let nav = UINavigationController(rootViewController: listVC)
-
-        window.rootViewController = nav       
-        window.makeKeyAndVisible()
-        self.window = window
-    }*/
-
-
     
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
