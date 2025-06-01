@@ -196,15 +196,22 @@ extension MovieListViewController: MovieListViewControllerProtocol {
     }
     
     func hideLoadingView() {
-        
+        DispatchQueue.main.async {
+            self.hideLoading()
+        }
     }
     
     func showLoadingView() {
-        
+        print("girdi")
+        DispatchQueue.main.async {
+            self.showLoading()
+        }
     }
     
     func showError(_ error: String) {
-        
+        DispatchQueue.main.async {
+            self.showAlert(with: "Alert", message: error)
+        }
     }
 
     func showOverlayDetail(with movie: Movie) {

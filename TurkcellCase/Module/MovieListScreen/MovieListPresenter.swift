@@ -47,6 +47,7 @@ final class MovieListPresenter {
 extension MovieListPresenter: MovieListPresenterProtocol {
     
     func viewDidLoad() {
+        view.showLoadingView()
         view.setupCollectionView()
         interactor.fetchAllMovies()
         view.reloadData()
@@ -102,6 +103,8 @@ extension MovieListPresenter: MovieListInteractorOutputProtocol {
     func fetchAllMovieListsSuccess(_ movies: [MovieCategory: [Movie]]) {
         self.moviesByCategory = movies
         view.reloadData()
+        view.hideLoadingView()
+        print("kulalnılıyor mu")
     }
     
     func fetchMoreMoviesSuccess(category: MovieCategory, movies: [Movie]) {
@@ -114,7 +117,7 @@ extension MovieListPresenter: MovieListInteractorOutputProtocol {
         isLoadingMore[category] = false
         
         view.reloadData()
-        
+        view.hideLoadingView()
         print(" Loaded \(movies.count) more movies for \(category)")
     }
     

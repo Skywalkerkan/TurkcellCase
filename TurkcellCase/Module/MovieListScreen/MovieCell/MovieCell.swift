@@ -38,7 +38,7 @@ final class MovieCell: UICollectionViewCell {
         let baseURL = "https://image.tmdb.org/t/p/w500"
         if let posterPath = movie.posterPath {
             let fullURL = URL(string: baseURL + posterPath)
-            imageView.sd_setImage(with: fullURL, placeholderImage: UIImage(systemName: "drop.halffull"), options: [.continueInBackground, .highPriority])
+            imageView.sd_setImage(with: fullURL, placeholderImage: UIImage(systemName: "movieclapper")?.withRenderingMode(.alwaysOriginal).withTintColor(.systemGray3), options: [.continueInBackground, .highPriority])
         } else {
             imageView.image = UIImage(systemName: "film")
         }
