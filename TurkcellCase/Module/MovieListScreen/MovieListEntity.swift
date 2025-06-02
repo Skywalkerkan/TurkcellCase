@@ -28,7 +28,7 @@ struct Movie: Codable {
     let adult: Bool?
     let backdropPath: String?
     let genreIds: [Int]?
-    let id: Int?
+    let id: Int
     let originalTitle, overview: String?
     let popularity: Double?
     let posterPath, releaseDate, title: String?

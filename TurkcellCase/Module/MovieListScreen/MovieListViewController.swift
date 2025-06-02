@@ -101,20 +101,21 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //+1 burada collectionViewin sonuna loading cell eklenmesi
         return presenter.getMovieCount(for: section) + 1
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let movies = presenter.getMoviesForSection(indexPath.section)
-        
+        //2 tane cell türü var birisi sondaki loading cell yükleme esnasında listenin sonunda gözüküyor
         if indexPath.item == movies.count {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCell.identifier, for: indexPath) as? LoadingCell {
                 cell.startLoading()
                 return cell
             }
         }
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) as? MovieCell else {
+        //Birisi bizim normal movie cellimiz
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.identifier, for: indexPath) as? MovieCell else {
             return UICollectionViewCell()
         }
         let movie = movies[indexPath.item]
@@ -124,6 +125,8 @@ extension MovieListViewController: UICollectionViewDelegate, UICollectionViewDat
 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //Loading Celle basılmaması için indexpathin kontrol edilmesi
+        guard indexPath.item < presenter.getMovieCount(for: indexPath.section) else { return }
         let movies = presenter.getMoviesForSection(indexPath.section)
         let movie = movies[indexPath.item]
         presenter.didSelectMovie(movie)
@@ -161,7 +164,7 @@ extension MovieListViewController: MovieListViewControllerProtocol {
     func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "MovieCell")
+        collectionView.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.identifier)
         collectionView.register(LoadingCell.self, forCellWithReuseIdentifier: LoadingCell.identifier)
         collectionView.register(
             SectionHeaderView.self,
