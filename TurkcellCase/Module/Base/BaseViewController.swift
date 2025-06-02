@@ -8,7 +8,7 @@
 import UIKit
 
 class BaseViewController: UIViewController, LoadingShowable {
-
+    //base view controller oluşturarak loading showabledan protokol alıp kolay bir şekilde show alertin ya da loading ekranının ekranda gösterilmesi
     override func viewDidLoad() {
         super.viewDidLoad()
     }

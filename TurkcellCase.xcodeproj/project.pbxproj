@@ -228,9 +228,7 @@
 				DEE1BB7A2DE4DA06004DF131 /* App */,
 				DEE1BB792DE4D9FC004DF131 /* Resources */,
 				DEE1BB782DE4D9E4004DF131 /* Module */,
-				DEE1BB772DE4D9DF004DF131 /* Entities */,
 				DEE1BB762DE4D9DA004DF131 /* Network */,
-				DEE1BB752DE4D9D4004DF131 /* Extensions */,
 				DEE1BB4E2DE4D960004DF131 /* Assets.xcassets */,
 				DEE1BB502DE4D960004DF131 /* LaunchScreen.storyboard */,
 				DEE1BB532DE4D960004DF131 /* Info.plist */,
@@ -256,13 +254,6 @@
 			path = TurkcellCaseUITests;
 			sourceTree = "<group>";
 		};
-		DEE1BB752DE4D9D4004DF131 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		DEE1BB762DE4D9DA004DF131 /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,13 +265,6 @@
 				DEE1BB9B2DE50A4A004DF131 /* NetworkService.swift */,
 			);
 			path = Network;
-			sourceTree = "<group>";
-		};
-		DEE1BB772DE4D9DF004DF131 /* Entities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Entities;
 			sourceTree = "<group>";
 		};
 		DEE1BB782DE4D9E4004DF131 /* Module */ = {

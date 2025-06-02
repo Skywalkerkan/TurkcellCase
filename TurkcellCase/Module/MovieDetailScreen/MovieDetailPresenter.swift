@@ -11,7 +11,6 @@ protocol MovieDetailPresenterProtocol {
     func viewDidLoad(movie: Movie?)
     var castCount: Int { get }
     func getCastMember(at index: Int) -> Cast?
-    func didSelectCast(_ cast: Cast)
     func fetchCredits(for movieID: Int)
     func didSelectPlayMovie(movie: Movie?)
 }
@@ -54,10 +53,6 @@ extension MovieDetailPresenter: MovieDetailPresenterProtocol {
     func getCastMember(at index: Int) -> Cast? {
         guard index < cast.count else { return nil }
         return cast[index]
-    }
-    
-    func didSelectCast(_ cast: Cast) {
-        print("🎭 Seçilen Oyuncu: \(cast.name ?? "-")")
     }
     
     func didSelectPlayMovie(movie: Movie?){

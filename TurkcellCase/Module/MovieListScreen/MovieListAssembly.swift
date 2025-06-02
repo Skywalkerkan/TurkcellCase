@@ -9,7 +9,7 @@ import Foundation
 import Swinject
 
 final class MovieListAssembly: Assembly {
-    
+    //Movielist için assemble classı
     func assemble(container: Container) {
         
         container.register(MovieServiceProtocol.self) { _ in

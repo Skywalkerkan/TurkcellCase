@@ -69,6 +69,7 @@ extension MovieListPresenter: MovieListPresenterProtocol {
     }
     
     func getSectionTitle(for section: Int) -> String {
+        //Section adlarını direk static verilmesi
         switch section {
         case 0: return "Popular"
         case 1: return "Top Rated"
@@ -81,6 +82,7 @@ extension MovieListPresenter: MovieListPresenterProtocol {
         router.navigate(.detail(movie: movie))
     }
     
+    //pagination işleminin yapılması bir section için daha fazla verinin çekilmesi
     func loadMoreMoviesIfNeeded(for section: Int) {
         guard section < sectionCategories.count else { return }
         let category = sectionCategories[section]

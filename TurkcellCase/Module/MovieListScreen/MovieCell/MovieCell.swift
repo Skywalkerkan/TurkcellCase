@@ -34,6 +34,13 @@ final class MovieCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) { fatalError("fatal error") }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.sd_cancelCurrentImageLoad()
+        imageView.image = nil
+    }
+    
+    
     func configure(with movie: Movie) {
         let baseURL = "https://image.tmdb.org/t/p/w500"
         if let posterPath = movie.posterPath {

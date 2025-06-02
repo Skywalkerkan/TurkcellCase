@@ -26,6 +26,7 @@ extension MovieDetailRouter: MovieDetailRouterProtocol {
     func navigate(_ route: MovieDetailRoutes) {
         switch route {
         case .playMovie(let movie):
+            //örnek video linkinin gönderilmesi playerVCye
             let playerVC = AssemblyManager.shared.container.resolve(
                 MoviePlayerViewController.self,
                 arguments: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
