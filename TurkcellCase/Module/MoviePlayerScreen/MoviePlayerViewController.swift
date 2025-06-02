@@ -182,6 +182,19 @@ final class MoviePlayerViewController: BaseViewController {
         listenOrientation()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.restrictRotation = .all
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.restrictRotation = .portrait
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         playerLayer?.frame = playerContainerView.bounds
@@ -246,7 +259,7 @@ final class MoviePlayerViewController: BaseViewController {
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             backButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             backButton.widthAnchor.constraint(equalToConstant: 44),
             backButton.heightAnchor.constraint(equalToConstant: 44)
         ])

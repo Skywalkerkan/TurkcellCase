@@ -284,12 +284,22 @@ class MovieDetailViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.restrictRotation = .portrait
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.restrictRotation = .all
+        }
     }
     
     private func setupUI() {
         view.backgroundColor = UIColor.black
         view.addSubview(scrollView)
-        navigationItem.backButtonDisplayMode = .minimal        
+        navigationItem.backButtonDisplayMode = .minimal
         navigationController?.navigationBar.tintColor = .white
         scrollView.addSubview(contentView)
         contentView.addSubview(backdropImageView)

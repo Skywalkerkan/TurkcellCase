@@ -80,6 +80,22 @@ final class MovieListViewController: BaseViewController {
         presenter.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //Buraya girerken kısıtlamayı portrait yap
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.restrictRotation = .portrait
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        //Buradan çıkarken kısıtlamayı kaldırma yeri
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            appDelegate.restrictRotation = .all
+        }
+    }
+    
     private func setupViews() {
         view.backgroundColor = .black
         view.addSubview(collectionView)

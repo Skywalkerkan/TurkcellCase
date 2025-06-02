@@ -10,11 +10,19 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var restrictRotation: UIInterfaceOrientationMask = .all
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         _ = AssemblyManager.shared
         return true
     }
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        //Bazı sayfalardaki landscape kısıtlamaları için kullanıldı 
+        return restrictRotation
+    }
+
 
     // MARK: UISceneSession Lifecycle
 
