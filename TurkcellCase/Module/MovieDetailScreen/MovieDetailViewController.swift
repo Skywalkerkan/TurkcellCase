@@ -16,7 +16,7 @@ protocol MovieDetailViewControllerProtocol: AnyObject {
     func showError(_ error: String)
 }
 
-class MovieDetailViewController: BaseViewController {
+final class MovieDetailViewController: BaseViewController {
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()

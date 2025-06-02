@@ -48,9 +48,17 @@ final class MoviePlayerInteractor: NSObject {
             player?.removeTimeObserver(observer)
             timeObserver = nil
         }
+
+        if let currentItem = player?.currentItem {
+            currentItem.removeObserver(self, forKeyPath: "status")
+        }
+
+        NotificationCenter.default.removeObserver(self)
+
         player?.pause()
         player = nil
     }
+
 }
 
 extension MoviePlayerInteractor: MoviePlayerInteractorProtocol {
