@@ -141,7 +141,7 @@ final class MoviePlayerViewController: BaseViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        label.textColor = .label
+        label.textColor = .white
         label.numberOfLines = 0
         label.text = "No title for this movie."
         return label
@@ -151,7 +151,7 @@ final class MoviePlayerViewController: BaseViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        label.textColor = .secondaryLabel
+        label.textColor = .lightGray
         label.numberOfLines = 0
         label.text = "There is no decription for this movie"
         label.lineBreakMode = .byWordWrapping
@@ -163,7 +163,7 @@ final class MoviePlayerViewController: BaseViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         let config = UIImage.SymbolConfiguration(pointSize: 18, weight: .semibold)
         button.setImage(UIImage(systemName: "chevron.left", withConfiguration: config), for: .normal)
-        button.tintColor = .label
+        button.tintColor = .white
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -219,7 +219,7 @@ final class MoviePlayerViewController: BaseViewController {
 
     
     private func setupUI() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .black
         navigationController?.setNavigationBarHidden(true, animated: false)
         
         view.addSubview(backButton)

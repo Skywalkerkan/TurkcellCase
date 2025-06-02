@@ -21,8 +21,8 @@ class CastCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
-        label.textColor = .label
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        label.textColor = .gray
         label.textAlignment = .center
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false

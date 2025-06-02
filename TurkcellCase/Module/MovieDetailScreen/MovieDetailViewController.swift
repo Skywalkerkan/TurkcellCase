@@ -75,6 +75,7 @@ class MovieDetailViewController: BaseViewController {
         label.font = UIFont.boldSystemFont(ofSize: 28)
         label.textColor = .label
         label.numberOfLines = 0
+        label.textColor = .white
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -83,7 +84,7 @@ class MovieDetailViewController: BaseViewController {
     private let yearLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.textColor = .secondaryLabel
+        label.textColor = .gray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -128,7 +129,7 @@ class MovieDetailViewController: BaseViewController {
         let label = UILabel()
         label.text = "Konu"
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor = .label
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -136,7 +137,7 @@ class MovieDetailViewController: BaseViewController {
     private let overviewLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = .label
+        label.textColor = .white
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -147,7 +148,7 @@ class MovieDetailViewController: BaseViewController {
         let label = UILabel()
         label.text = "Actors"
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor = .label
+        label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -171,7 +172,7 @@ class MovieDetailViewController: BaseViewController {
         button.setImage(UIImage(systemName: "heart"), for: .normal)
         button.setImage(UIImage(systemName: "heart.fill"), for: .selected)
         button.tintColor = .systemRed
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = .lightGray
         button.layer.cornerRadius = 25
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -181,12 +182,14 @@ class MovieDetailViewController: BaseViewController {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "square.and.arrow.up"), for: .normal)
         button.tintColor = .systemBlue
-        button.backgroundColor = .systemGray6
+        button.backgroundColor = .lightGray
         button.layer.cornerRadius = 25
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
+    //Burası tamamen tablet için oluşturuldu
+    //Eğer sayfa yüklüyse yani tablette yandan detail sayfası açıldıysa overlay olarak MovieListViewControllerında başka celle basılması durumunda sayfanın güncellenmesinin sağlanması
     var movie: Movie? {
         didSet { guard isViewLoaded else { return };
             configureViews()
@@ -200,7 +203,6 @@ class MovieDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupConstraints()
         presenter.viewDidLoad(movie: movie)
         if let movieId = movie?.id {
             presenter.fetchCredits(for: movieId)
@@ -285,16 +287,17 @@ class MovieDetailViewController: BaseViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = UIColor.systemBackground
+        view.backgroundColor = UIColor.black
         view.addSubview(scrollView)
-        
+        navigationItem.backButtonDisplayMode = .minimal        
+        navigationController?.navigationBar.tintColor = .white
         scrollView.addSubview(contentView)
         contentView.addSubview(backdropImageView)
         
         gradientLayer.colors = [
             UIColor.clear.cgColor,
-            UIColor.systemBackground.withAlphaComponent(0.6).cgColor,
-            UIColor.systemBackground.cgColor
+            UIColor.black.withAlphaComponent(0.6).cgColor,
+            UIColor.black.cgColor
         ]
         gradientLayer.locations = [0.0, 0.7, 1.0]
         backdropImageView.layer.addSublayer(gradientLayer)
@@ -303,22 +306,18 @@ class MovieDetailViewController: BaseViewController {
         setupPlayButton()
         
         contentView.addSubview(titleLabel)
-
         contentView.addSubview(yearLabel)
         
         setupRatingView()
 
         contentView.addSubview(genreLabel)
-        
         contentView.addSubview(overviewTitleLabel)
-
         contentView.addSubview(overviewLabel)
-        
         contentView.addSubview(castTitleLabel)
-
         contentView.addSubview(castCollectionView)
         
         setupActionButtons()
+        setupConstraints()
     }
     
     private func setupPlayButton() {
