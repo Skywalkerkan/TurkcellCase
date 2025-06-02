@@ -23,18 +23,18 @@ final class MovieListViewController: BaseViewController {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
             let isTablet = UIDevice.current.userInterfaceIdiom == .pad
             
-            let itemsPerRow: CGFloat = isTablet ? 4.0 : 3
-            let itemHeight: CGFloat = isTablet ? 330 : 200
+            let itemWidth: CGFloat = isTablet ? 230 : 130
+            let itemHeight: CGFloat = isTablet ? 350 : 190
             
             let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0 / itemsPerRow),
+                widthDimension: .absolute(itemWidth),
                 heightDimension: .absolute(itemHeight)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4)
-            
+
             let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
+                widthDimension: .estimated(itemWidth),
                 heightDimension: .absolute(itemHeight)
             )
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -53,9 +53,10 @@ final class MovieListViewController: BaseViewController {
                 alignment: .top
             )
             section.boundarySupplementaryItems = [header]
-            
+
             return section
         }
+
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -95,6 +96,18 @@ final class MovieListViewController: BaseViewController {
             appDelegate.restrictRotation = .all
         }
     }
+    
+    override func viewWillTransition(to size: CGSize,
+                                     with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to:size, with:coordinator)
+        // tablet için ekran yataya geçerkenki constraitin ayarlanması
+        guard let overlay = overlayLeadingConstraint else { return }
+        coordinator.animate(alongsideTransition: { _ in
+            overlay.constant = size.width * 0.55
+            self.view.layoutIfNeeded()
+        })
+    }
+
     
     private func setupViews() {
         view.backgroundColor = .black
